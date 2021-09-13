@@ -1,9 +1,9 @@
 ---
 name: Nova funcionalidade - Frontend
 about: Descreva a nova funcionalidade
-title: Dê um título para a funcionalidade
-labels: enhansement, frontend
-assignees: 
+title:
+labels: enhancement, frontend
+assignees: Abel13
 
 ---
 
