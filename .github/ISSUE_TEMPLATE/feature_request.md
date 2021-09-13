@@ -1,7 +1,7 @@
 ---
 name: Nova funcionalidade - Frontend
 about: Descreva a nova funcionalidade
-title: "[TELA]"
+title: ''
 labels: enhancement, frontend
 assignees: Abel13
 
@@ -19,6 +19,7 @@ assignees: Abel13
 
 **Descrição detalhada**
 > (descreva em detalhes a nova funcionalidade)
+
 
 **Protótipo**
 (carregue uma imagem do protótipo)
