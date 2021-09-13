@@ -1,9 +1,9 @@
 ---
 name: Nova funcionalidade
 about: Descreva a nova funcionalidade
-title: ''
-labels: ''
-assignees: ''
+title: Dê um título para a funcionalidade
+labels: Adicione tags para esta funcionalidade
+assignees: Informe quem irá desenvolve-la
 
 ---
 
@@ -11,7 +11,7 @@ assignees: ''
 
 | Tempo previsto | Tempo realizado |
 | ---      | ---       |
-| 16 horas |          |
+| x horas | y horas |
  
 
 **Estória de usuário**
