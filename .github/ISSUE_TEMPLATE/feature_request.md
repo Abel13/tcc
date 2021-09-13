@@ -4,6 +4,7 @@ about: Descreva a nova funcionalidade
 title:
 labels: enhancement, frontend
 assignees: Abel13
+projects: Sistema Financeiro Pessoal
 
 ---
 
