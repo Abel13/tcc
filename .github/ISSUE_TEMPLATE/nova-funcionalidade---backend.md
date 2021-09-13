@@ -22,4 +22,4 @@ assignees: Abel13
 
 | GET | PAYLOAD |
 | ---      | ---       |
-| /endpoint | ```JSON{}``` |
+| /endpoint | ```json { "prop1": "value", "prop2":"value" } ``` |
