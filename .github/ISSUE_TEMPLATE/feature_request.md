@@ -1,9 +1,9 @@
 ---
-name: Nova funcionalidade
+name: Nova funcionalidade - Frontend
 about: Descreva a nova funcionalidade
 title: Dê um título para a funcionalidade
-labels: Adicione tags para esta funcionalidade
-assignees: Informe quem irá desenvolve-la
+labels: enhansement, frontend
+assignees: 
 
 ---
 
