@@ -1,0 +1,23 @@
+{
+  "SignInPage": {
+    "ErrorsStrings": {
+      "EmailRequired": "EMail required!",
+      "InvalidEmail": "Invalid Email!",
+      "PasswordRequired": "Password required!",
+      "ToastTitle": "Woops!",
+      "ToastMessage": "There was an error signing in! Check your credentials."
+    },
+    "FormStrings":{
+      "Title": "Sign in",
+      "EmailPlaceholder": "EMail",
+      "PasswordPlaceholder": "Password",
+      "ButtonSignIn": "Submit",
+      "LinkForgotPassword": "I forgot my password",
+      "LinkRegister": "Sign Up"
+    },
+    "SuccessStrings": {
+      "ToastTitle": "All right!",
+      "ToastMessage": "Welcome to Sheep Finance."
+    }
+  }
+}
