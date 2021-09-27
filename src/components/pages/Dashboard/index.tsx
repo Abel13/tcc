@@ -1,11 +1,30 @@
-import React from 'react';
+import React from "react";
 
-function index() {
+import { Header, Menu } from "../../../components/molecules";
+
+import {
+  Body,
+  List,
+  Container,
+  RightBar,
+  Content,
+  AccountItem,
+  AccountList,
+  AccountsContainer,
+  ContentScrolled,
+  CalendarContainer,
+  CalendarList,
+} from "./styles";
+
+const Dashboard: React.FC = () => {
   return (
-    <div>
-      DASHBOARD
-    </div>
+    <Container>
+      <Header logoVisible profileVisible exitButtonVisible />
+      <Body>
+        <Menu />
+      </Body>
+    </Container>
   );
-}
+};
 
-export default index;
+export default Dashboard;
