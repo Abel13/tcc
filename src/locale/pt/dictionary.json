@@ -1,0 +1,195 @@
+{
+  "SignInPage": {
+    "ErrorsStrings": {
+      "EmailRequired": "E-Mail obrigatório!",
+      "InvalidEmail": "E-mail inválido!",
+      "PasswordRequired": "Senha obrigatória!",
+      "ToastTitle": "Ops!",
+      "ToastMessage": "Ocorreu um erro ao fazer login! Cheque suas credenciais."
+    },
+    "FormStrings":{
+      "Title": "Faça seu login",
+      "EmailPlaceholder": "E-Mail",
+      "PasswordPlaceholder": "Senha",
+      "ButtonSignIn": "ENTRAR",
+      "LinkForgotPassword": "Esqueci minha senha",
+      "LinkRegister": "Criar conta"
+    },
+    "SuccessStrings": {
+      "ToastTitle": "Tudo certo!",
+      "ToastMessage": "Seja bem vindo ao Sheep Finance."
+    }
+  },
+  "SignUpPage": {
+    "ErrorsStrings": {
+      "NameRequired": "Nome obrigatório!",
+      "EmailRequired": "E-Mail obrigatório!",
+      "InvalidEmail": "E-mail inválido!",
+      "PasswordRequired": "Senha obrigatória!",
+      "InvalidPassword": "A senha precisa ter no mínimo 6 caracteres!",
+      "ConfirmPasswordRequired": "Confirmação de senha obrigatória!",
+      "PasswordDoesNotMatch": "As senhas precisam ser iguais!",
+      "ToastTitle": "Ops!",
+      "ToastMessage": "Ocorreu um erro ao fazer seu cadastro!"
+    },
+    "FormStrings":{
+      "Title": "Faça seu cadastro",
+      "NamePlaceholder": "Nome",
+      "EmailPlaceholder": "E-Mail",
+      "PasswordPlaceholder": "Senha",
+      "ConfirmPasswordPlaceholder": "Confirmação de senha",
+      "ButtonRegister": "Cadastrar",
+      "LinkBack": "Voltar para login"
+    },
+    "SuccessStrings": {
+      "ToastTitle": "Tudo certo!",
+      "ToastMessage": "Você já pode fazer seu login! :D"
+    }
+  },
+  "DashboardPage":{
+    "Header":{
+      "Welcome": "Bem-vindo"
+    }
+  },
+  "ProfilePage":{
+    "ErrorsStrings":{
+      "NameRequired": "Nome obrigatório!",
+      "EmailRequired": "E-Mail obrigatório!",
+      "InvalidEmail": "E-mail inválido!",
+      "PasswordRequired": "Senha obrigatória!",
+      "InvalidPassword": "A senha precisa ter no mínimo 6 caracteres!",
+      "ConfirmPasswordRequired": "Confirmação de senha obrigatória!",
+      "PasswordDoesNotMatch": "As senhas precisam ser iguais!",
+      "ToastTitle": "Ops!",
+      "ToastMessage": "Ocorreu um erro ao alterar o perfil!"
+    },
+    "FormStrings":{
+      "NamePlaceholder":"Nome",
+      "EmailPlaceholder": "E-Mail",
+      "PasswordPlaceholder":"Nova senha",
+      "OldPasswordPlaceholder": "Senha atual",
+      "ConfirmPasswordPlaceholder": "Confirmação de senha",
+      "Title": "Meu Perfil",
+      "LinkBack": "Voltar",
+      "ButtonConfirm": "Confirmar Mudanças"
+    },
+    "SuccessStrings":{
+      "ToastTitle": "Tudo certo!",
+      "ToastMessage": "Perfil alterado com sucesso!"
+    }
+  },
+  "GoalsPage": {
+    "Title": "Investimentos",
+    "FormTitle": "Investimento",
+    "Placeholders":{
+      "Description": "Descrição",
+      "GoalValue": "Objetivo",
+      "Value": "Valor",
+      "Date": "Data"
+    },
+    "ErrorsStrings": {
+      "DescriptionRequired": "Descrição é obrigatória!",
+      "GoalValueRequired": "O valor deve ser no mínimo zero!",
+      "DateRequired": "Data obrigatória!",
+      "ToastTitle": "Ops!",
+      "ToastMessage": "Ocorreu um erro ao cadastrar o investimento!"
+    },
+    "SuccessStrings": {
+      "ToastTitle": "Pronto!",
+      "ToastCreateMessage": "Investimento cadastrado com sucesso!",
+      "ToastEditMessage": "Investimento alterado com sucesso!",
+      "ToastDeleteMessage": "Investimento excluído com sucesso!"
+    }
+  },
+  "AccountsPage": {
+    "Title": "Contas",
+    "FormTitle": "Conta",
+    "Placeholders":{
+      "Name": "Nome",
+      "InitialBalance": "Valor Inicial"
+    },
+    "ErrorsStrings": {
+      "NameRequired": "Nome obrigatório!",
+      "InitialBalanceRequired": "Valor inicial obrigatório!",
+      "InitialBalanceMin": "Valor inicial inválido!",
+      "ToastTitle": "Ops!",
+      "ToastMessage": "Ocorreu um erro ao cadastrar a conta!"
+    },
+    "SuccessStrings": {
+      "ToastTitle": "Pronto!",
+      "ToastCreateMessage": "Conta cadastrada com sucesso!",
+      "ToastEditMessage": "Conta alterada com sucesso!",
+      "ToastDeleteMessage": "Conta excluída com sucesso!"
+    }
+  },
+  "OutgoingsPage": {
+    "Title": "Saídas",
+    "FormTitle": "Saída",
+    "Placeholders":{
+      "Description": "Descrição",
+      "Value": "Valor",
+      "Date": "Data",
+      "Category": "Selecione a categoria",
+      "Account": "Selecione a conta"
+    },
+    "ErrorsStrings": {
+      "DescriptionRequired": "Descrição obrigatório!",
+      "CategoryRequired": "Categoria obrigatório!",
+      "ValueRequired": "Valor obrigatório!",
+      "DateRequired": "Data obrigatória!",
+      "AccountRequired": "Conta obrigatória!",
+      "ToastTitle": "Ops!",
+      "ToastMessage": "Ocorreu um erro ao cadastrar a saída!"
+    },
+    "SuccessStrings": {
+      "ToastTitle": "Pronto!",
+      "ToastCreateMessage": "Saída cadastrada com sucesso!",
+      "ToastEditMessage": "Saída alterada com sucesso!",
+      "ToastDeleteMessage": "Saída excluída com sucesso!"
+    }
+  },
+  "IncomingsPage": {
+    "Title": "Entradas",
+    "FormTitle": "Entrada",
+    "Placeholders":{
+      "Description": "Descrição",
+      "Value": "Valor",
+      "Date": "Data",
+      "Category": "Selecione a categoria",
+      "Account": "Selecione a conta"
+    },
+    "ErrorsStrings": {
+      "DescriptionRequired": "Descrição obrigatório!",
+      "ValueRequired": "Valor obrigatório!",
+      "DateRequired": "Data obrigatória!",
+      "AccountRequired": "Conta obrigatória!",
+      "CategoryRequired": "Categoria obrigatória!",
+      "ToastTitle": "Ops!",
+      "ToastMessage": "Ocorreu um erro ao cadastrar a entrada!"
+    },
+    "SuccessStrings": {
+      "ToastTitle": "Pronto!",
+      "ToastCreateMessage": "Entrada cadastrada com sucesso!",
+      "ToastEditMessage": "Entrada alterada com sucesso!",
+      "ToastDeleteMessage": "Entrada excluída com sucesso!"
+    }
+  },
+  "TransfersPage" : {
+    "Title": "Transferências",
+    "FormTitle": "Transferência",
+    "ErrorsStrings": {
+      "DescriptionRequired": "Descrição obrigatório!",
+      "ValueRequired": "Valor obrigatório!",
+      "DateRequired": "Data obrigatória!",
+      "AccountRequired": "Conta obrigatória!",
+      "ToastTitle": "Ops!",
+      "ToastMessage": "Ocorreu um erro ao cadastrar a entrada!"
+    },
+    "SuccessStrings": {
+      "ToastTitle": "Pronto!",
+      "ToastCreateMessage": "Entrada cadastrada com sucesso!",
+      "ToastEditMessage": "Entrada alterada com sucesso!",
+      "ToastDeleteMessage": "Entrada excluída com sucesso!"
+    }
+  }
+}
