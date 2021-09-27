@@ -28,6 +28,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     setData({ ...data, loading: true });
     localStorage.setItem("@SheepFinance:user", JSON.stringify(userData));
 
+
     setData({ ...data, user: userData, loading: false });
   }, []);
 

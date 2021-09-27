@@ -1,6 +1,6 @@
 import React from "react";
-import { AccountProvider } from "./Account";
 
+import { AccountProvider } from "./Account";
 import { AuthProvider } from "./Auth";
 import { ToastProvider } from "./Toast";
 

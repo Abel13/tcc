@@ -37,8 +37,6 @@ const SignIn: React.FC = () => {
 
       await schema.validate(data, { abortEarly: false });
 
-      console.log("AQUI");
-
       await signIn({
         email: data.email.toLowerCase(),
         password: data.password,
@@ -61,7 +59,7 @@ const SignIn: React.FC = () => {
       const errors = formatError(err);
 
       addToast({
-        type: "error",
+        type: 'error',
         title: ErrorsStrings.ToastTitle,
         description: errors[0].message,
       });

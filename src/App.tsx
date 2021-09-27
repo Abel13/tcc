@@ -1,18 +1,18 @@
-import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import styled from 'styled-components';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { ThemeProvider } from '@material-ui/core/styles';
-import dayjs from 'dayjs';
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import styled from "styled-components";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { ThemeProvider } from "@material-ui/core/styles";
+import dayjs from "dayjs";
 
-import GlobalStyle from './styles/global';
+import GlobalStyle from "./styles/global";
 
-import Colors from './styles/colors.json';
+import Colors from "./styles/colors.json";
 
-import AppProvider from './hooks';
-import Routes from './routes';
-import theme from './styles/theme';
-import { dayjsConfig } from './services/dayjs';
+import AppProvider from "./hooks";
+import Routes from "./routes";
+import theme from "./styles/theme";
+import { dayjsConfig } from "./services/dayjs";
 
 export const Version = styled.span`
   position: absolute;
@@ -22,7 +22,7 @@ export const Version = styled.span`
 `;
 
 const App: React.FC = () => {
-  dayjs.locale('pt-BR', dayjsConfig);
+  dayjs.locale("pt-BR", dayjsConfig);
 
   return (
     <Router>
@@ -32,7 +32,7 @@ const App: React.FC = () => {
           <Routes />
         </AppProvider>
         <GlobalStyle />
-        <Version>0.0.1</Version>
+        <Version>0.0.2</Version>
       </ThemeProvider>
     </Router>
   );
