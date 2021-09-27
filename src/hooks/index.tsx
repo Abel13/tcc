@@ -1,12 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import { AuthProvider } from './Auth';
-import { ToastProvider } from './Toast';
+import { AccountProvider } from "./Account";
+import { AuthProvider } from "./Auth";
+import { ToastProvider } from "./Toast";
 
 const AppProvider: React.FC = ({ children }) => (
   <ToastProvider>
     <AuthProvider>
-      {children}
+      <AccountProvider>{children}</AccountProvider>
     </AuthProvider>
   </ToastProvider>
 );
