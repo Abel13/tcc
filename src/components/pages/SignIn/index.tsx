@@ -1,20 +1,20 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { FiLogIn } from 'react-icons/fi';
-import { FormHandles } from '@unform/core';
-import { Form } from '@unform/web';
-import * as Yup from 'yup';
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { FiLogIn } from "react-icons/fi";
+import { FormHandles } from "@unform/core";
+import { Form } from "@unform/web";
+import * as Yup from "yup";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import { useAuth } from '../../../hooks/Auth';
-import { useToast } from '../../../hooks/Toast';
-import { errorValidation, formatError } from '../../../utils/errorValidation';
+import { useAuth } from "../../../hooks/Auth";
+import { useToast } from "../../../hooks/Toast";
+import { errorValidation, formatError } from "../../../utils/errorValidation";
 
-import {  } from '../../../components/atoms';
-import { Content, AnimationContainer, Container } from './styles';
-import { SignInPage } from '../../../locale/pt/dictionary.json';
-import { SignInFormData } from './interfaces';
-import { Login } from '../../organisms';
+import {} from "../../../components/atoms";
+import { Content, AnimationContainer, Container } from "./styles";
+import { SignInPage } from "../../../locale/pt/dictionary.json";
+import { SignInFormData } from "./interfaces";
+import { Login } from "../../organisms";
 
 const SignIn: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -37,13 +37,15 @@ const SignIn: React.FC = () => {
 
       await schema.validate(data, { abortEarly: false });
 
+      console.log("AQUI");
+
       await signIn({
         email: data.email.toLowerCase(),
         password: data.password,
       });
 
       addToast({
-        type: 'success',
+        type: "success",
         title: SuccessStrings.ToastTitle,
         description: SuccessStrings.ToastMessage,
       });
@@ -59,7 +61,7 @@ const SignIn: React.FC = () => {
       const errors = formatError(err);
 
       addToast({
-        type: 'error',
+        type: "error",
         title: ErrorsStrings.ToastTitle,
         description: errors[0].message,
       });
@@ -73,7 +75,7 @@ const SignIn: React.FC = () => {
         <AnimationContainer>
           <Form
             ref={formRef}
-            initialData={{ name: '' }}
+            initialData={{ name: "" }}
             onSubmit={handleSubmit}
           >
             <Login loading={loading} />
