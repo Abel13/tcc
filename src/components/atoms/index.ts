@@ -7,7 +7,7 @@ export { default as DynamicContent } from "./DynamicContent";
 export { default as ScrollView } from "./ScrollView";
 export { default as EmptyData } from "./EmptyData";
 export { default as ButtonBack } from "./ButtonBack";
-// export { default as Select } from './Select';
+export { default as Select } from "./Select";
 // export { default as ChartPie } from './ChartPie';
 // export { default as ChartBar } from './ChartBar';
 // export { default as Calendar } from './Calendar';
