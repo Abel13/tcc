@@ -1,9 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Container, Image } from './styles';
-import { DashboardPage } from '../../../locale/pt/dictionary.json';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Container, Image } from "./styles";
+import { DashboardPage } from "../../../locale/pt/dictionary.json";
 
-import { ProfileProps } from './interfaces';
+import { ProfileProps } from "./interfaces";
 
 const Profile: React.FC<ProfileProps> = ({ name, ...rest }) => {
   const { Header } = DashboardPage;
@@ -12,7 +12,7 @@ const Profile: React.FC<ProfileProps> = ({ name, ...rest }) => {
       <Image {...rest} />
       <div>
         <span>{Header.Welcome}</span>
-        <Link to="/profile">
+        <Link to="/dashboard">
           <strong>{name}</strong>
         </Link>
       </div>
