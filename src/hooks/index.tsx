@@ -5,6 +5,7 @@ import { AuthProvider } from "./Auth";
 import { CategoryProvider } from "./Category";
 import { DateProvider } from "./Date";
 import { IncomingProvider } from "./Incoming";
+import { OutgoingProvider } from "./Outgoing";
 import { ToastProvider } from "./Toast";
 
 const AppProvider: React.FC = ({ children }) => (
@@ -16,13 +17,13 @@ const AppProvider: React.FC = ({ children }) => (
         <AccountProvider>
           {/* <GoalProvider> */}
           <CategoryProvider>
-            {/* <OutgoingProvider> */}
-            <IncomingProvider>
-              {/* <TransferProvider> */}
-              {children}
-              {/* </TransferProvider> */}
-            </IncomingProvider>
-            {/* </OutgoingProvider> */}
+            <OutgoingProvider>
+              <IncomingProvider>
+                {/* <TransferProvider> */}
+                {children}
+                {/* </TransferProvider> */}
+              </IncomingProvider>
+            </OutgoingProvider>
           </CategoryProvider>
           {/* </GoalProvider> */}
         </AccountProvider>

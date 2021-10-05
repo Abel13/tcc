@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { AiFillBank, AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { FiPlusSquare } from "react-icons/fi";
+import { FiMinusSquare, FiPlusSquare } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useSpring } from "react-spring";
 import { Button, ScrollView } from "../../atoms";
@@ -38,6 +38,14 @@ const Menu: React.FC = () => {
               <div>
                 <span>Entradas</span>
                 <FiPlusSquare />
+              </div>
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link to="/outgoings">
+              <div>
+                <span>Saídas</span>
+                <FiMinusSquare />
               </div>
             </Link>
           </MenuItem>
