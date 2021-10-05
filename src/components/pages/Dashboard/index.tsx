@@ -2,19 +2,7 @@ import React from "react";
 
 import { Header, Menu } from "../../../components/molecules";
 
-import {
-  Body,
-  List,
-  Container,
-  RightBar,
-  Content,
-  AccountItem,
-  AccountList,
-  AccountsContainer,
-  ContentScrolled,
-  CalendarContainer,
-  CalendarList,
-} from "./styles";
+import { Body, Container } from "./styles";
 
 const Dashboard: React.FC = () => {
   return (

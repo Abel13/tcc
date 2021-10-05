@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { AiFillBank, AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import { FiPlusSquare } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useSpring } from "react-spring";
 import { Button, ScrollView } from "../../atoms";
 import { Container, MenuItem, MenuItems, MenuIcon } from "./styles";
 
 const Menu: React.FC = () => {
-  const [menuOpen, setMenuOpen] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const rightMenuAnimation = useSpring({
     transform: menuOpen ? `translateX(0%)` : `translateX(-80%)`,
@@ -29,6 +30,14 @@ const Menu: React.FC = () => {
               <div>
                 <span>Contas</span>
                 <AiFillBank />
+              </div>
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link to="/incomings">
+              <div>
+                <span>Entradas</span>
+                <FiPlusSquare />
               </div>
             </Link>
           </MenuItem>

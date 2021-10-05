@@ -19,7 +19,7 @@ import { Login } from "../../organisms";
 const SignIn: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const formRef = useRef<FormHandles>(null);
-  const { ErrorsStrings, FormStrings, SuccessStrings } = SignInPage;
+  const { ErrorsStrings, SuccessStrings } = SignInPage;
 
   const { signIn } = useAuth();
   const { addToast } = useToast();
@@ -59,7 +59,7 @@ const SignIn: React.FC = () => {
       const errors = formatError(err);
 
       addToast({
-        type: 'error',
+        type: "error",
         title: ErrorsStrings.ToastTitle,
         description: errors[0].message,
       });
