@@ -32,7 +32,7 @@ const App: React.FC = () => {
           <Routes />
         </AppProvider>
         <GlobalStyle />
-        <Version>0.0.3</Version>
+        <Version>0.0.4</Version>
       </ThemeProvider>
     </Router>
   );
