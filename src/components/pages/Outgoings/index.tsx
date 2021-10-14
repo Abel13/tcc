@@ -251,7 +251,12 @@ const OutgoingScreen: React.FC = () => {
             <List>
               {loading ? (
                 <DynamicContent visible={!!loading}>
-                  <Loading loading={!!loading} showDescription size={30} />
+                  <Loading
+                    loading={!!loading}
+                    type={"bounce"}
+                    showDescription
+                    size={30}
+                  />
                 </DynamicContent>
               ) : (
                 loadList()
