@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import dayjs from "dayjs";
 import { errorValidation, formatError } from "../../../utils/errorValidation";
 
-import { IncomingsPage } from "../../../locale/pt/dictionary.json";
+import { OutgoingsPage } from "../../../locale/pt/dictionary.json";
 
 import {
   Input,
@@ -16,36 +16,35 @@ import {
   ScrollView,
   EmptyData,
 } from "../../../components/atoms";
-import { Body, ButtonContainer, Container, List } from "./styles";
-import { IncomingFormData } from "./interfaces";
+import { OutgoingFormData } from "./interfaces";
 import { FormStateProps } from "../../../interfaces";
 import api from "../../../services/api";
 import { useToast } from "../../../hooks/Toast";
-import { useAccount } from "../../../hooks/Account";
-import { ItemProps } from "../../../components/atoms/Select/interfaces";
-import { useIncoming } from "../../../hooks/Incoming";
-import { useCategory } from "../../../hooks/Category";
-import { useDate } from "../../../hooks/Date";
-
 import {
-  ListItem,
   Header,
   ActionButtons,
+  ListItem,
   PageTitle,
 } from "../../../components/molecules";
+import { useOutgoing } from "../../../hooks/Outgoing";
+import { useAccount } from "../../../hooks/Account";
+import { ItemProps } from "../../../components/atoms/Select/interfaces";
+import { useDate } from "../../../hooks/Date";
+import { useCategory } from "../../../hooks/Category";
+import { Body, Container, List, ButtonContainer } from "./styles";
 
-const IncomingScreen: React.FC = () => {
-  const { Placeholders, FormTitle, Title, ErrorsStrings, SuccessStrings } =
-    IncomingsPage;
+const OutgoingScreen: React.FC = () => {
+  const { FormTitle, Title, ErrorsStrings, SuccessStrings, Placeholders } =
+    OutgoingsPage;
   const [formState, setFormState] = useState<FormStateProps>({
     status: "closed",
   });
-  const [initialData, setInitialData] = useState<IncomingFormData>(
-    {} as IncomingFormData
+  const [initialData, setInitialData] = useState<OutgoingFormData>(
+    {} as OutgoingFormData
   );
   const [editId, setEditId] = useState<string>("");
 
-  const { incomings, total, loading, getIncomings } = useIncoming();
+  const { outgoings, total, loading, getOutgoings } = useOutgoing();
   const { accounts, getAccounts } = useAccount();
   const { categories, getCategories } = useCategory();
   const [accountItems, setAccountItems] = useState<ItemProps[]>(
@@ -80,7 +79,6 @@ const IncomingScreen: React.FC = () => {
       setAccountItems(items);
     }
   }, [accounts]);
-
   useEffect(() => {
     if (categories) {
       const items: ItemProps[] = categories.map((e) => {
@@ -102,10 +100,10 @@ const IncomingScreen: React.FC = () => {
 
   const handleAdd = async () => {
     setFormState({ status: "add" });
-    setInitialData({} as IncomingFormData);
+    setInitialData({} as OutgoingFormData);
   };
 
-  const handleSubmit = async (data: IncomingFormData) => {
+  const handleSubmit = async (data: OutgoingFormData) => {
     try {
       formRef.current?.setErrors({});
       const schema = Yup.object().shape({
@@ -126,7 +124,7 @@ const IncomingScreen: React.FC = () => {
       };
 
       if (formState.status === "edit") {
-        await api.put(`/incomings/${editId}`, body);
+        await api.put(`/outgoings/${editId}`, body);
         setEditId("");
         addToast({
           type: "success",
@@ -134,7 +132,7 @@ const IncomingScreen: React.FC = () => {
           description: SuccessStrings.ToastEditMessage,
         });
       } else if (formState.status === "add") {
-        await api.post("/incomings", body);
+        await api.post("/outgoings", body);
         addToast({
           type: "success",
           title: SuccessStrings.ToastTitle,
@@ -150,7 +148,7 @@ const IncomingScreen: React.FC = () => {
       }
 
       setFormState({ status: "closed" });
-      getIncomings(actualDate, endOfThisMonth);
+      getOutgoings(actualDate, endOfThisMonth);
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = errorValidation(err);
@@ -168,23 +166,25 @@ const IncomingScreen: React.FC = () => {
       });
     }
   };
+
   const handleEdit = (key: string) => {
     setFormState({ status: "edit" });
 
-    const incoming = incomings.find((a) => a.secureId === key);
+    const outgoing = outgoings.find((a) => a.secureId === key);
 
-    if (incoming) {
+    if (outgoing) {
       setEditId(key);
       setInitialData({
-        ...incoming,
-        date: dayjs(incoming.date).format("YYYY-MM-DD"),
+        ...outgoing,
+        date: dayjs(outgoing.date).format("YYYY-MM-DD"),
       });
     }
   };
+
   const handleDelete = async (key: string) => {
     try {
-      await api.delete(`/incomings/${key}`);
-      getIncomings(actualDate, endOfThisMonth);
+      await api.delete(`/outgoings/${key}`);
+      getOutgoings(actualDate, endOfThisMonth);
       addToast({
         type: "success",
         title: SuccessStrings.ToastTitle,
@@ -202,7 +202,7 @@ const IncomingScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    getIncomings(actualDate, endOfThisMonth);
+    getOutgoings(actualDate, endOfThisMonth);
   }, [actualDate, endOfThisMonth]);
 
   const handleForwardMonth = useCallback(() => {
@@ -214,14 +214,14 @@ const IncomingScreen: React.FC = () => {
   }, [actualDate, endOfThisMonth]);
 
   const loadList = useCallback(() => {
-    return incomings && incomings.length > 0 ? (
-      incomings.map((item) => (
+    return outgoings && outgoings.length > 0 ? (
+      outgoings.map((item) => (
         <ListItem
-          secureId={item.secureId}
+          description={item.description}
+          data={item.accountName}
           subDescription={item.value}
           status={item.date}
-          data={item.accountName}
-          description={item.description}
+          secureId={item.secureId}
           editItem={handleEdit}
           deleteItem={handleDelete}
         />
@@ -229,7 +229,7 @@ const IncomingScreen: React.FC = () => {
     ) : (
       <EmptyData />
     );
-  }, [incomings]);
+  }, [outgoings]);
 
   return (
     <Container>
@@ -264,7 +264,6 @@ const IncomingScreen: React.FC = () => {
             </List>
           </ScrollView>
         </div>
-
         <DynamicContent visible={formState.status !== "closed"}>
           <Form ref={formRef} initialData={initialData} onSubmit={handleSubmit}>
             <h1>{FormTitle}</h1>
@@ -272,17 +271,17 @@ const IncomingScreen: React.FC = () => {
             <Input
               maxLength={25}
               name="description"
-              placeholder={Placeholders.Description}
+              placeholder="Description"
             />
             <Input
               name="value"
-              placeholder={Placeholders.Value}
+              placeholder="Valor"
               dataType="currency"
               disabled={
                 formState.status === "edit" || formState.status === "read"
               }
             />
-            <Input type="date" name="date" placeholder={Placeholders.Date} />
+            <Input type="date" name="date" placeholder="Data" />
             <Select
               name="categoryId"
               items={categoryItems}
@@ -309,4 +308,4 @@ const IncomingScreen: React.FC = () => {
   );
 };
 
-export default IncomingScreen;
+export default OutgoingScreen;

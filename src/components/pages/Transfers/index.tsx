@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import dayjs from "dayjs";
 import { errorValidation, formatError } from "../../../utils/errorValidation";
 
-import { IncomingsPage } from "../../../locale/pt/dictionary.json";
+import { TransfersPage } from "../../../locale/pt/dictionary.json";
 
 import {
   Input,
@@ -17,46 +17,38 @@ import {
   EmptyData,
 } from "../../../components/atoms";
 import { Body, ButtonContainer, Container, List } from "./styles";
-import { IncomingFormData } from "./interfaces";
+import { TransferFormData } from "./interfaces";
 import { FormStateProps } from "../../../interfaces";
 import api from "../../../services/api";
 import { useToast } from "../../../hooks/Toast";
-import { useAccount } from "../../../hooks/Account";
-import { ItemProps } from "../../../components/atoms/Select/interfaces";
-import { useIncoming } from "../../../hooks/Incoming";
-import { useCategory } from "../../../hooks/Category";
-import { useDate } from "../../../hooks/Date";
-
 import {
-  ListItem,
   Header,
   ActionButtons,
+  ListItem,
   PageTitle,
 } from "../../../components/molecules";
+import { useTransfer } from "../../../hooks/Transfer";
+import { useAccount } from "../../../hooks/Account";
+import { ItemProps } from "../../../components/atoms/Select/interfaces";
+import { useDate } from "../../../hooks/Date";
 
-const IncomingScreen: React.FC = () => {
-  const { Placeholders, FormTitle, Title, ErrorsStrings, SuccessStrings } =
-    IncomingsPage;
+const TransferScreen: React.FC = () => {
+  const { FormTitle, Title, ErrorsStrings, SuccessStrings } = TransfersPage;
   const [formState, setFormState] = useState<FormStateProps>({
-    status: "closed",
+    status: "add",
   });
-  const [initialData, setInitialData] = useState<IncomingFormData>(
-    {} as IncomingFormData
+  const [initialData, setInitialData] = useState<TransferFormData>(
+    {} as TransferFormData
   );
   const [editId, setEditId] = useState<string>("");
 
-  const { incomings, total, loading, getIncomings } = useIncoming();
+  const { transfers, total, loading, getTransfers } = useTransfer();
   const { accounts, getAccounts } = useAccount();
-  const { categories, getCategories } = useCategory();
   const [accountItems, setAccountItems] = useState<ItemProps[]>(
-    {} as ItemProps[]
-  );
-  const [categoryItems, setCategoryItems] = useState<ItemProps[]>(
     {} as ItemProps[]
   );
 
   const formRef = useRef<FormHandles>(null);
-
   const { addToast } = useToast();
   const {
     actualDate,
@@ -69,32 +61,17 @@ const IncomingScreen: React.FC = () => {
 
   useEffect(() => {
     if (accounts) {
-      const items: ItemProps[] = accounts
-        .filter((e) => {
-          return e.active;
-        })
-        .map((e) => {
-          return { id: e.secureId, value: e.name };
-        });
+      const items: ItemProps[] = accounts.map((e) => {
+        return { id: e.secureId, value: e.name };
+      });
 
       setAccountItems(items);
     }
   }, [accounts]);
 
   useEffect(() => {
-    if (categories) {
-      const items: ItemProps[] = categories.map((e) => {
-        return { id: e.secureId, value: e.name };
-      });
-
-      setCategoryItems(items);
-    }
-  }, [categories]);
-
-  useEffect(() => {
     const loadData = async () => {
       await getAccounts();
-      await getCategories();
     };
 
     loadData();
@@ -102,31 +79,29 @@ const IncomingScreen: React.FC = () => {
 
   const handleAdd = async () => {
     setFormState({ status: "add" });
-    setInitialData({} as IncomingFormData);
+    setInitialData({} as TransferFormData);
   };
 
-  const handleSubmit = async (data: IncomingFormData) => {
+  const handleSubmit = async (data: TransferFormData) => {
     try {
       formRef.current?.setErrors({});
       const schema = Yup.object().shape({
-        description: Yup.string().required(ErrorsStrings.DescriptionRequired),
-        value: Yup.string().required(ErrorsStrings.ValueRequired),
-        date: Yup.string().required(ErrorsStrings.DateRequired),
-        accountId: Yup.string().required(ErrorsStrings.AccountRequired),
-        categoryId: Yup.string().required(ErrorsStrings.CategoryRequired),
+        value: Yup.string().required(ErrorsStrings.DescriptionRequired),
+        date: Yup.string().required(ErrorsStrings.DescriptionRequired),
+        accountInId: Yup.string().required(ErrorsStrings.DescriptionRequired),
+        accountOutId: Yup.string().required(ErrorsStrings.DescriptionRequired),
       });
       await schema.validate(data, { abortEarly: false });
 
       const body = {
-        description: data.description,
         value: data.value,
         date: data.date,
-        categoryId: data.categoryId,
-        accountId: data.accountId,
+        accountInId: data.accountInId,
+        accountOutId: data.accountOutId,
       };
 
       if (formState.status === "edit") {
-        await api.put(`/incomings/${editId}`, body);
+        await api.put(`/transfers/${editId}`, body);
         setEditId("");
         addToast({
           type: "success",
@@ -134,7 +109,7 @@ const IncomingScreen: React.FC = () => {
           description: SuccessStrings.ToastEditMessage,
         });
       } else if (formState.status === "add") {
-        await api.post("/incomings", body);
+        await api.post("/transfers", body);
         addToast({
           type: "success",
           title: SuccessStrings.ToastTitle,
@@ -150,7 +125,7 @@ const IncomingScreen: React.FC = () => {
       }
 
       setFormState({ status: "closed" });
-      getIncomings(actualDate, endOfThisMonth);
+      getTransfers(actualDate, endOfThisMonth);
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = errorValidation(err);
@@ -171,20 +146,20 @@ const IncomingScreen: React.FC = () => {
   const handleEdit = (key: string) => {
     setFormState({ status: "edit" });
 
-    const incoming = incomings.find((a) => a.secureId === key);
+    const transfer = transfers.find((a) => a.secureId === key);
 
-    if (incoming) {
+    if (transfer) {
       setEditId(key);
       setInitialData({
-        ...incoming,
-        date: dayjs(incoming.date).format("YYYY-MM-DD"),
+        ...transfer,
+        date: dayjs(transfer.date).format("YYYY-MM-DD"),
       });
     }
   };
   const handleDelete = async (key: string) => {
     try {
-      await api.delete(`/incomings/${key}`);
-      getIncomings(actualDate, endOfThisMonth);
+      await api.delete(`/transfers/${key}`);
+      getTransfers(actualDate, endOfThisMonth);
       addToast({
         type: "success",
         title: SuccessStrings.ToastTitle,
@@ -202,7 +177,7 @@ const IncomingScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    getIncomings(actualDate, endOfThisMonth);
+    getTransfers(actualDate, endOfThisMonth);
   }, [actualDate, endOfThisMonth]);
 
   const handleForwardMonth = useCallback(() => {
@@ -214,14 +189,13 @@ const IncomingScreen: React.FC = () => {
   }, [actualDate, endOfThisMonth]);
 
   const loadList = useCallback(() => {
-    return incomings && incomings.length > 0 ? (
-      incomings.map((item) => (
+    return transfers && transfers.length > 0 ? (
+      transfers.map((item) => (
         <ListItem
           secureId={item.secureId}
+          description={`De: ${item.accountOutName} - Para: ${item.accountInName}`}
           subDescription={item.value}
           status={item.date}
-          data={item.accountName}
-          description={item.description}
           editItem={handleEdit}
           deleteItem={handleDelete}
         />
@@ -229,7 +203,7 @@ const IncomingScreen: React.FC = () => {
     ) : (
       <EmptyData />
     );
-  }, [incomings]);
+  }, [transfers]);
 
   return (
     <Container>
@@ -247,6 +221,7 @@ const IncomingScreen: React.FC = () => {
           <ButtonContainer>
             <Button onClick={handleAdd}>Incluir</Button>
           </ButtonContainer>
+
           <ScrollView>
             <List>
               {loading ? (
@@ -259,40 +234,37 @@ const IncomingScreen: React.FC = () => {
                   />
                 </DynamicContent>
               ) : (
+                // <div />
                 loadList()
               )}
             </List>
           </ScrollView>
         </div>
-
         <DynamicContent visible={formState.status !== "closed"}>
           <Form ref={formRef} initialData={initialData} onSubmit={handleSubmit}>
             <h1>{FormTitle}</h1>
 
             <Input
-              maxLength={25}
-              name="description"
-              placeholder={Placeholders.Description}
-            />
-            <Input
               name="value"
-              placeholder={Placeholders.Value}
+              placeholder="Valor"
               dataType="currency"
               disabled={
                 formState.status === "edit" || formState.status === "read"
               }
             />
-            <Input type="date" name="date" placeholder={Placeholders.Date} />
+            <Input type="date" name="date" placeholder="Data" />
             <Select
-              name="categoryId"
-              items={categoryItems}
-              placeholder={Placeholders.Category}
-              disabled={formState.status === "read"}
+              name="accountOutId"
+              items={accountItems}
+              placeholder="Conta de saída"
+              disabled={
+                formState.status === "edit" || formState.status === "read"
+              }
             />
             <Select
-              name="accountId"
+              name="accountInId"
               items={accountItems}
-              placeholder={Placeholders.Account}
+              placeholder="Conta de entrada"
               disabled={
                 formState.status === "edit" || formState.status === "read"
               }
@@ -309,4 +281,4 @@ const IncomingScreen: React.FC = () => {
   );
 };
 
-export default IncomingScreen;
+export default TransferScreen;
