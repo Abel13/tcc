@@ -28,10 +28,11 @@ import {
 } from "../../../components/molecules";
 import { useOutgoing } from "../../../hooks/Outgoing";
 import { useAccount } from "../../../hooks/Account";
-import { ItemProps } from "../../../components/atoms/Select/interfaces";
+import { GroupProps } from "../../../components/atoms/Select/interfaces";
 import { useDate } from "../../../hooks/Date";
 import { useCategory } from "../../../hooks/Category";
 import { Body, Container, List, ButtonContainer } from "./styles";
+import Colors from "../../../styles/colors.json";
 
 const OutgoingScreen: React.FC = () => {
   const { FormTitle, Title, ErrorsStrings, SuccessStrings, Placeholders } =
@@ -47,11 +48,11 @@ const OutgoingScreen: React.FC = () => {
   const { outgoings, total, loading, getOutgoings } = useOutgoing();
   const { accounts, getAccounts } = useAccount();
   const { categories, getCategories } = useCategory();
-  const [accountItems, setAccountItems] = useState<ItemProps[]>(
-    {} as ItemProps[]
+  const [accountItems, setAccountItems] = useState<GroupProps[]>(
+    {} as GroupProps[]
   );
-  const [categoryItems, setCategoryItems] = useState<ItemProps[]>(
-    {} as ItemProps[]
+  const [categoryItems, setCategoryItems] = useState<GroupProps[]>(
+    {} as GroupProps[]
   );
 
   const formRef = useRef<FormHandles>(null);
@@ -68,21 +69,47 @@ const OutgoingScreen: React.FC = () => {
 
   useEffect(() => {
     if (accounts) {
-      const items: ItemProps[] = accounts
-        .filter((e) => {
-          return e.active;
-        })
-        .map((e) => {
-          return { id: e.secureId, value: e.name };
-        });
+      const items: GroupProps[] = [
+        {
+          items: accounts
+            .filter((e) => {
+              return e.active;
+            })
+            .map((e) => {
+              return { id: e.secureId, value: e.name };
+            }),
+        },
+      ];
 
       setAccountItems(items);
     }
   }, [accounts]);
   useEffect(() => {
     if (categories) {
-      const items: ItemProps[] = categories.map((e) => {
-        return { id: e.secureId, value: e.name };
+      const fixedExpenses = categories.filter((e) => {
+        return e.group === "Gastos Essenciais";
+      });
+
+      const variableExpenses = categories.filter((e) => {
+        return e.group === "Estilo de Vida";
+      });
+
+      var items: GroupProps[] = [];
+
+      items.push({
+        groupName: "GASTOS FIXOS/ESSENCIAIS",
+        groupColor: Colors.fixedExpenses,
+        items: fixedExpenses.map((e) => {
+          return { id: e.secureId, value: e.name };
+        }),
+      });
+
+      items.push({
+        groupName: "GASTOS VARIÁVEIS/ESTILO DE VIDA",
+        groupColor: Colors.variableExpenses,
+        items: variableExpenses.map((e) => {
+          return { id: e.secureId, value: e.name };
+        }),
       });
 
       setCategoryItems(items);
@@ -284,13 +311,13 @@ const OutgoingScreen: React.FC = () => {
             <Input type="date" name="date" placeholder="Data" />
             <Select
               name="categoryId"
-              items={categoryItems}
+              groups={categoryItems}
               placeholder={Placeholders.Category}
               disabled={formState.status === "read"}
             />
             <Select
               name="accountId"
-              items={accountItems}
+              groups={accountItems}
               placeholder={Placeholders.Account}
               disabled={
                 formState.status === "edit" || formState.status === "read"

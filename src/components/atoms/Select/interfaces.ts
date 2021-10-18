@@ -1,4 +1,4 @@
-import { SelectHTMLAttributes } from 'react';
+import { SelectHTMLAttributes } from "react";
 
 export interface ContainerProps {
   isFocused: boolean;
@@ -9,12 +9,20 @@ export interface ContainerProps {
 }
 
 export interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
-  name: string;
+  groups: GroupProps[];
+}
+
+export interface GroupProps {
+  groupName?: string;
+  groupColor?: string;
   items: ItemProps[];
+}
+
+export interface GroupStyleProps {
+  groupColor?: string;
 }
 
 export interface ItemProps extends SelectHTMLAttributes<HTMLOptionElement> {
   id: string;
   value: string;
-  group?: string;
 }

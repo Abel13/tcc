@@ -29,7 +29,7 @@ import {
 } from "../../../components/molecules";
 import { useTransfer } from "../../../hooks/Transfer";
 import { useAccount } from "../../../hooks/Account";
-import { ItemProps } from "../../../components/atoms/Select/interfaces";
+import { GroupProps } from "../../../components/atoms/Select/interfaces";
 import { useDate } from "../../../hooks/Date";
 
 const TransferScreen: React.FC = () => {
@@ -44,8 +44,8 @@ const TransferScreen: React.FC = () => {
 
   const { transfers, total, loading, getTransfers } = useTransfer();
   const { accounts, getAccounts } = useAccount();
-  const [accountItems, setAccountItems] = useState<ItemProps[]>(
-    {} as ItemProps[]
+  const [accountItems, setAccountItems] = useState<GroupProps[]>(
+    {} as GroupProps[]
   );
 
   const formRef = useRef<FormHandles>(null);
@@ -61,9 +61,17 @@ const TransferScreen: React.FC = () => {
 
   useEffect(() => {
     if (accounts) {
-      const items: ItemProps[] = accounts.map((e) => {
-        return { id: e.secureId, value: e.name };
-      });
+      const items: GroupProps[] = [
+        {
+          items: accounts
+            .filter((e) => {
+              return e.active;
+            })
+            .map((e) => {
+              return { id: e.secureId, value: e.name };
+            }),
+        },
+      ];
 
       setAccountItems(items);
     }
@@ -86,10 +94,10 @@ const TransferScreen: React.FC = () => {
     try {
       formRef.current?.setErrors({});
       const schema = Yup.object().shape({
-        value: Yup.string().required(ErrorsStrings.DescriptionRequired),
-        date: Yup.string().required(ErrorsStrings.DescriptionRequired),
-        accountInId: Yup.string().required(ErrorsStrings.DescriptionRequired),
-        accountOutId: Yup.string().required(ErrorsStrings.DescriptionRequired),
+        value: Yup.string().required(ErrorsStrings.ValueRequired),
+        date: Yup.string().required(ErrorsStrings.DateRequired),
+        accountInId: Yup.string().required(ErrorsStrings.AccountInRequired),
+        accountOutId: Yup.string().required(ErrorsStrings.AccountOutRequired),
       });
       await schema.validate(data, { abortEarly: false });
 
@@ -255,7 +263,7 @@ const TransferScreen: React.FC = () => {
             <Input type="date" name="date" placeholder="Data" />
             <Select
               name="accountOutId"
-              items={accountItems}
+              groups={accountItems}
               placeholder="Conta de saída"
               disabled={
                 formState.status === "edit" || formState.status === "read"
@@ -263,7 +271,7 @@ const TransferScreen: React.FC = () => {
             />
             <Select
               name="accountInId"
-              items={accountItems}
+              groups={accountItems}
               placeholder="Conta de entrada"
               disabled={
                 formState.status === "edit" || formState.status === "read"
