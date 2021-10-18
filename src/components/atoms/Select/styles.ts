@@ -1,9 +1,9 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
-import { shade } from 'polished';
-import Colors from '../../../styles/colors.json';
-import Tooltip from '../Tooltip';
-import { ContainerProps } from './interfaces';
+import { lighten } from "polished";
+import Colors from "../../../styles/colors.json";
+import Tooltip from "../Tooltip";
+import { ContainerProps, GroupStyleProps } from "./interfaces";
 
 export const Container = styled.div<ContainerProps>`
   background: ${Colors.inputs};
@@ -20,7 +20,7 @@ export const Container = styled.div<ContainerProps>`
     margin-top: 8px;
   }
 
-  ${props =>
+  ${(props: any) =>
     props.gotError &&
     css`
       transition: border-bottom-color 0.8s;
@@ -28,7 +28,7 @@ export const Container = styled.div<ContainerProps>`
       border-bottom-color: ${Colors.danger};
     `}
 
-  ${props =>
+  ${(props: any) =>
     props.isFocused &&
     css`
       transition: border-bottom-color 0.8s;
@@ -37,43 +37,48 @@ export const Container = styled.div<ContainerProps>`
       color: ${Colors.primary};
     `}
 
-  ${props =>
+  ${(props: any) =>
     props.isFilled &&
     css`
       color: ${Colors.primary};
     `}
+`;
 
-  select {
-    flex: 1;
-    border: 0;
-    background: transparent;
-    font-family: 'Montserrat', serif;
-    font-size: 16px;
+export const CustomSelect = styled.select`
+  flex: 1;
+  border: 0;
+  background: transparent;
+  font-family: "Montserrat", serif;
+  font-size: 16px;
+  color: ${Colors.light};
 
-    ${props =>
-      props.disabled
-        ? css`
-            color: ${Colors.grayHard};
-          `
-        : css`
-            color: ${Colors.light};
-          `}
-
-    &::placeholder {
-      color: ${Colors.grayHard};
-    }
-
-    option {
-      color: ${Colors.light};
-      background: ${Colors.inputs};
-      font-size: 14px;
-      font-weight: small;
-      display: flex;
-      /* white-space: pre; */
-      /* min-height: 40px; */
-      padding: 10px;
-    }
+  &::placeholder {
+    color: ${Colors.grayHard};
   }
+`;
+
+export const ItemsGroup = styled.optgroup<GroupStyleProps>`
+  color: ${Colors.dark};
+  background: ${Colors.blackTransparent};
+  font-size: 14px;
+
+  ${(props: any) =>
+    props.groupColor &&
+    css`
+      background: ${lighten(0.2, props.groupColor)};
+    `}
+`;
+
+export const CustomOption = styled.option`
+  color: ${Colors.light};
+  background: ${Colors.inputs};
+  font-size: 14px;
+
+  ${(props: any) =>
+    !props.value &&
+    css`
+      color: ${lighten(0.2, Colors.grayHard)};
+    `}
 `;
 
 export const Error = styled(Tooltip)`
