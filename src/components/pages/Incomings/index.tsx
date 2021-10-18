@@ -22,7 +22,7 @@ import { FormStateProps } from "../../../interfaces";
 import api from "../../../services/api";
 import { useToast } from "../../../hooks/Toast";
 import { useAccount } from "../../../hooks/Account";
-import { ItemProps } from "../../../components/atoms/Select/interfaces";
+import { GroupProps } from "../../../components/atoms/Select/interfaces";
 import { useIncoming } from "../../../hooks/Incoming";
 import { useCategory } from "../../../hooks/Category";
 import { useDate } from "../../../hooks/Date";
@@ -33,6 +33,7 @@ import {
   ActionButtons,
   PageTitle,
 } from "../../../components/molecules";
+import Colors from "../../../styles/colors.json";
 
 const IncomingScreen: React.FC = () => {
   const { Placeholders, FormTitle, Title, ErrorsStrings, SuccessStrings } =
@@ -48,11 +49,11 @@ const IncomingScreen: React.FC = () => {
   const { incomings, total, loading, getIncomings } = useIncoming();
   const { accounts, getAccounts } = useAccount();
   const { categories, getCategories } = useCategory();
-  const [accountItems, setAccountItems] = useState<ItemProps[]>(
-    {} as ItemProps[]
+  const [accountItems, setAccountItems] = useState<GroupProps[]>(
+    {} as GroupProps[]
   );
-  const [categoryItems, setCategoryItems] = useState<ItemProps[]>(
-    {} as ItemProps[]
+  const [categoryItems, setCategoryItems] = useState<GroupProps[]>(
+    {} as GroupProps[]
   );
 
   const formRef = useRef<FormHandles>(null);
@@ -69,13 +70,17 @@ const IncomingScreen: React.FC = () => {
 
   useEffect(() => {
     if (accounts) {
-      const items: ItemProps[] = accounts
-        .filter((e) => {
-          return e.active;
-        })
-        .map((e) => {
-          return { id: e.secureId, value: e.name };
-        });
+      const items: GroupProps[] = [
+        {
+          items: accounts
+            .filter((e) => {
+              return e.active;
+            })
+            .map((e) => {
+              return { id: e.secureId, value: e.name };
+            }),
+        },
+      ];
 
       setAccountItems(items);
     }
@@ -83,8 +88,18 @@ const IncomingScreen: React.FC = () => {
 
   useEffect(() => {
     if (categories) {
-      const items: ItemProps[] = categories.map((e) => {
-        return { id: e.secureId, value: e.name };
+      const incomes = categories.filter((e) => {
+        return e.group === "Renda";
+      });
+
+      var items: GroupProps[] = [];
+
+      items.push({
+        groupName: "RECEITA/ENTRADAS",
+        groupColor: Colors.revenues,
+        items: incomes.map((e) => {
+          return { id: e.secureId, value: e.name };
+        }),
       });
 
       setCategoryItems(items);
@@ -285,13 +300,13 @@ const IncomingScreen: React.FC = () => {
             <Input type="date" name="date" placeholder={Placeholders.Date} />
             <Select
               name="categoryId"
-              items={categoryItems}
+              groups={categoryItems}
               placeholder={Placeholders.Category}
               disabled={formState.status === "read"}
             />
             <Select
               name="accountId"
-              items={accountItems}
+              groups={accountItems}
               placeholder={Placeholders.Account}
               disabled={
                 formState.status === "edit" || formState.status === "read"
