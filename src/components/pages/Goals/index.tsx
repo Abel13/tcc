@@ -24,8 +24,14 @@ import { ActionButtons, Header, ListItem } from "../../../components/molecules";
 import { useGoal } from "../../../hooks/Goal";
 
 const GoalScreen: React.FC = () => {
-  const { Placeholders, FormTitle, Title, ErrorsStrings, SuccessStrings } =
-    GoalsPage;
+  const {
+    Placeholders,
+    FormTitle,
+    Title,
+    ErrorsStrings,
+    SuccessStrings,
+    AddButton,
+  } = GoalsPage;
   const [formState, setFormState] = useState<FormStateProps>({
     status: "closed",
   });
@@ -222,7 +228,7 @@ const GoalScreen: React.FC = () => {
         <div>
           <TitleContainer>
             <strong>{Title}</strong>
-            <Button onClick={handleAdd}>Incluir</Button>
+            <Button onClick={handleAdd}>{AddButton}</Button>
           </TitleContainer>
           <ScrollView>
             <List>

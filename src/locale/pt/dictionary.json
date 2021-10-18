@@ -81,6 +81,7 @@
   "GoalsPage": {
     "Title": "Investimentos",
     "FormTitle": "Investimento",
+    "AddButton": "Incluir",
     "Placeholders": {
       "Description": "Descrição",
       "GoalValue": "Objetivo",

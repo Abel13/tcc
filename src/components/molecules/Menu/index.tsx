@@ -64,7 +64,7 @@ const Menu: React.FC = () => {
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link to="/transfers">
+            <Link to="/goals">
               <div>
                 <span>Metas</span>
                 <BiRocket />

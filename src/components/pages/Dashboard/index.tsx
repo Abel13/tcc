@@ -96,7 +96,7 @@ const Dashboard: React.FC = () => {
         <Menu />
         {loading ? (
           <Content>
-            <Loading type="pacman" showDescription />
+            <Loading type="bounce" showDescription />
           </Content>
         ) : (
           <Content>
