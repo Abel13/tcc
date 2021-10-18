@@ -1,15 +1,21 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { FiAlertCircle } from 'react-icons/fi';
-import { useField } from '@unform/core';
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { FiAlertCircle } from "react-icons/fi";
+import { useField } from "@unform/core";
 
-import { Container, Error } from './styles';
-import Colors from '../../../styles/colors.json';
-import { SelectProps } from './interfaces';
+import {
+  Container,
+  CustomOption,
+  CustomSelect,
+  Error,
+  ItemsGroup,
+} from "./styles";
+import Colors from "../../../styles/colors.json";
+import { SelectProps } from "./interfaces";
 
 const Select: React.FC<SelectProps> = ({
   placeholder,
   name,
-  items,
+  groups,
   disabled,
   ...rest
 }) => {
@@ -34,13 +40,13 @@ const Select: React.FC<SelectProps> = ({
     registerField({
       name: fieldName,
       ref: selectRef.current,
-      path: 'value',
+      path: "value",
     });
   }, [fieldName, registerField]);
 
   return (
     <Container gotError={!!error} isFilled={isFilled} isFocused={isFocused}>
-      <select
+      <CustomSelect
         onFocus={handleSelectFocus}
         onBlur={handleSelectBlur}
         defaultValue={defaultValue}
@@ -48,16 +54,26 @@ const Select: React.FC<SelectProps> = ({
         ref={selectRef}
         {...rest}
       >
-        <option value="">{placeholder}</option>
-        {items.length > 0 &&
-          items.map(item => {
+        <CustomOption value="">{placeholder}</CustomOption>
+        {groups.length > 0 &&
+          groups.map((group) => {
             return (
-              <option key={item.id} value={item.id}>
-                {item.value}
-              </option>
+              <ItemsGroup
+                groupColor={group.groupColor}
+                label={group.groupName ?? placeholder}
+              >
+                {group.items.length > 0 &&
+                  group.items.map((item) => {
+                    return (
+                      <CustomOption key={item.id} value={item.id}>
+                        {item.value}
+                      </CustomOption>
+                    );
+                  })}
+              </ItemsGroup>
             );
           })}
-      </select>
+      </CustomSelect>
 
       {error && (
         <Error title={error}>
