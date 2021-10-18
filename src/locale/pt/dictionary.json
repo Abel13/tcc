@@ -7,7 +7,7 @@
       "ToastTitle": "Ops!",
       "ToastMessage": "Ocorreu um erro ao fazer login! Cheque suas credenciais."
     },
-    "FormStrings":{
+    "FormStrings": {
       "Title": "Faça seu login",
       "EmailPlaceholder": "E-Mail",
       "PasswordPlaceholder": "Senha",
@@ -32,7 +32,7 @@
       "ToastTitle": "Ops!",
       "ToastMessage": "Ocorreu um erro ao fazer seu cadastro!"
     },
-    "FormStrings":{
+    "FormStrings": {
       "Title": "Faça seu cadastro",
       "NamePlaceholder": "Nome",
       "EmailPlaceholder": "E-Mail",
@@ -46,13 +46,13 @@
       "ToastMessage": "Você já pode fazer seu login! :D"
     }
   },
-  "DashboardPage":{
-    "Header":{
+  "DashboardPage": {
+    "Header": {
       "Welcome": "Bem-vindo"
     }
   },
-  "ProfilePage":{
-    "ErrorsStrings":{
+  "ProfilePage": {
+    "ErrorsStrings": {
       "NameRequired": "Nome obrigatório!",
       "EmailRequired": "E-Mail obrigatório!",
       "InvalidEmail": "E-mail inválido!",
@@ -63,17 +63,17 @@
       "ToastTitle": "Ops!",
       "ToastMessage": "Ocorreu um erro ao alterar o perfil!"
     },
-    "FormStrings":{
-      "NamePlaceholder":"Nome",
+    "FormStrings": {
+      "NamePlaceholder": "Nome",
       "EmailPlaceholder": "E-Mail",
-      "PasswordPlaceholder":"Nova senha",
+      "PasswordPlaceholder": "Nova senha",
       "OldPasswordPlaceholder": "Senha atual",
       "ConfirmPasswordPlaceholder": "Confirmação de senha",
       "Title": "Meu Perfil",
       "LinkBack": "Voltar",
       "ButtonConfirm": "Confirmar Mudanças"
     },
-    "SuccessStrings":{
+    "SuccessStrings": {
       "ToastTitle": "Tudo certo!",
       "ToastMessage": "Perfil alterado com sucesso!"
     }
@@ -81,7 +81,7 @@
   "GoalsPage": {
     "Title": "Investimentos",
     "FormTitle": "Investimento",
-    "Placeholders":{
+    "Placeholders": {
       "Description": "Descrição",
       "GoalValue": "Objetivo",
       "Value": "Valor",
@@ -104,7 +104,7 @@
   "AccountsPage": {
     "Title": "Contas",
     "FormTitle": "Conta",
-    "Placeholders":{
+    "Placeholders": {
       "Name": "Nome",
       "InitialBalance": "Valor Inicial"
     },
@@ -125,7 +125,7 @@
   "OutgoingsPage": {
     "Title": "Saídas",
     "FormTitle": "Saída",
-    "Placeholders":{
+    "Placeholders": {
       "Description": "Descrição",
       "Value": "Valor",
       "Date": "Data",
@@ -133,7 +133,7 @@
       "Account": "Selecione a conta"
     },
     "ErrorsStrings": {
-      "DescriptionRequired": "Descrição obrigatório!",
+      "DescriptionRequired": "Descrição obrigatória!",
       "CategoryRequired": "Categoria obrigatório!",
       "ValueRequired": "Valor obrigatório!",
       "DateRequired": "Data obrigatória!",
@@ -151,7 +151,7 @@
   "IncomingsPage": {
     "Title": "Entradas",
     "FormTitle": "Entrada",
-    "Placeholders":{
+    "Placeholders": {
       "Description": "Descrição",
       "Value": "Valor",
       "Date": "Data",
@@ -159,7 +159,7 @@
       "Account": "Selecione a conta"
     },
     "ErrorsStrings": {
-      "DescriptionRequired": "Descrição obrigatório!",
+      "DescriptionRequired": "Descrição obrigatória!",
       "ValueRequired": "Valor obrigatório!",
       "DateRequired": "Data obrigatória!",
       "AccountRequired": "Conta obrigatória!",
@@ -174,14 +174,15 @@
       "ToastDeleteMessage": "Entrada excluída com sucesso!"
     }
   },
-  "TransfersPage" : {
+  "TransfersPage": {
     "Title": "Transferências",
     "FormTitle": "Transferência",
     "ErrorsStrings": {
-      "DescriptionRequired": "Descrição obrigatório!",
+      "DescriptionRequired": "Descrição obrigatória!",
       "ValueRequired": "Valor obrigatório!",
       "DateRequired": "Data obrigatória!",
-      "AccountRequired": "Conta obrigatória!",
+      "AccountInRequired": "Conta de entrada obrigatória!",
+      "AccountOutRequired": "Conta de saída obrigatória!",
       "ToastTitle": "Ops!",
       "ToastMessage": "Ocorreu um erro ao cadastrar a entrada!"
     },

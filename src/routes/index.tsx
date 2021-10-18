@@ -8,6 +8,8 @@ import Dashboard from "../components/pages/Dashboard";
 import Accounts from "../components/pages/Accounts";
 import Incomings from "../components/pages/Incomings";
 import Outgoings from "../components/pages/Outgoings";
+import Transfers from "../components/pages/Transfers";
+import Goals from "../components/pages/Goals";
 
 const Routes: React.FC = () => (
   <Switch>
@@ -17,6 +19,8 @@ const Routes: React.FC = () => (
     <Route path="/accounts" component={Accounts} isPrivate />
     <Route path="/incomings" component={Incomings} isPrivate />
     <Route path="/outgoings" component={Outgoings} isPrivate />
+    <Route path="/transfers" component={Transfers} isPrivate />
+    <Route path="/goals" component={Goals} isPrivate />
   </Switch>
 );
 

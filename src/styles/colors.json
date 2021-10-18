@@ -7,6 +7,11 @@
   "gray": "#999591",
   "grayHard": "#666360",
 
+  "revenues": "#00B0F0",
+  "fixedExpenses": "#E26B0A",
+  "variableExpenses": "#FF0000",
+  "investments": "#76933C",
+
   "light": "#e4edf8",
   "dark": "#28262e",
 
