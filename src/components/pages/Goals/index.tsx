@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { AiOutlinePlus } from "react-icons/ai";
 import { errorValidation, formatError } from "../../../utils/errorValidation";
 
-import { GoalsPage } from "../../../locale/pt/dictionary.json";
+import { GoalsPage, Global } from "../../../locale/pt/dictionary.json";
 
 import {
   Input,
@@ -90,8 +90,8 @@ const GoalScreen: React.FC = () => {
       } else {
         addToast({
           type: "error",
-          title: ErrorsStrings.ToastTitle,
-          description: ErrorsStrings.ToastMessage,
+          title: Global.ToastTitle,
+          description: Global.ToastMessage,
         });
         return;
       }
@@ -106,7 +106,7 @@ const GoalScreen: React.FC = () => {
       const errors = formatError(err);
       addToast({
         type: "error",
-        title: ErrorsStrings.ToastTitle,
+        title: Global.ToastTitle,
         description: errors[0].message,
       });
     }
@@ -147,7 +147,7 @@ const GoalScreen: React.FC = () => {
       const errors = formatError(err);
       addToast({
         type: "error",
-        title: ErrorsStrings.ToastTitle,
+        title: Global.ToastTitle,
         description: errors[0].message,
       });
     }
@@ -177,7 +177,7 @@ const GoalScreen: React.FC = () => {
 
       addToast({
         type: "error",
-        title: ErrorsStrings.ToastTitle,
+        title: Global.ToastTitle,
         description: errors[0].message,
       });
     }

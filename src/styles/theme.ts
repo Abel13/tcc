@@ -1,6 +1,5 @@
-import { red } from '@material-ui/core/colors';
-import { createMuiTheme } from '@material-ui/core/styles';
-import Colors from './colors.json';
+import { createMuiTheme } from "@material-ui/core/styles";
+import Colors from "./colors.json";
 
 // A custom theme for this app
 const theme = createMuiTheme({
@@ -17,7 +16,7 @@ const theme = createMuiTheme({
     background: {
       default: Colors.white,
     },
-    type: 'dark',
+    type: "dark",
   },
 });
 

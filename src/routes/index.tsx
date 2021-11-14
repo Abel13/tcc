@@ -10,6 +10,8 @@ import Incomings from "../components/pages/Incomings";
 import Outgoings from "../components/pages/Outgoings";
 import Transfers from "../components/pages/Transfers";
 import Goals from "../components/pages/Goals";
+import Plan from "../components/pages/Plan";
+import CashFlow from "../components/pages/CashFlow";
 
 const Routes: React.FC = () => (
   <Switch>
@@ -21,6 +23,8 @@ const Routes: React.FC = () => (
     <Route path="/outgoings" component={Outgoings} isPrivate />
     <Route path="/transfers" component={Transfers} isPrivate />
     <Route path="/goals" component={Goals} isPrivate />
+    <Route path="/plan" component={Plan} isPrivate />
+    <Route path="/cashflow" component={CashFlow} isPrivate />
   </Switch>
 );
 

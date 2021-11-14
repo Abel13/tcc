@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import dayjs from "dayjs";
 import { errorValidation, formatError } from "../../../utils/errorValidation";
 
-import { TransfersPage } from "../../../locale/pt/dictionary.json";
+import { TransfersPage, Global } from "../../../locale/pt/dictionary.json";
 
 import {
   Input,
@@ -35,7 +35,7 @@ import { useDate } from "../../../hooks/Date";
 const TransferScreen: React.FC = () => {
   const { FormTitle, Title, ErrorsStrings, SuccessStrings } = TransfersPage;
   const [formState, setFormState] = useState<FormStateProps>({
-    status: "add",
+    status: "closed",
   });
   const [initialData, setInitialData] = useState<TransferFormData>(
     {} as TransferFormData
@@ -94,7 +94,9 @@ const TransferScreen: React.FC = () => {
     try {
       formRef.current?.setErrors({});
       const schema = Yup.object().shape({
-        value: Yup.string().required(ErrorsStrings.ValueRequired),
+        value: Yup.number()
+          .required(ErrorsStrings.ValueRequired)
+          .min(0.01, ErrorsStrings.ValueMin),
         date: Yup.string().required(ErrorsStrings.DateRequired),
         accountInId: Yup.string().required(ErrorsStrings.AccountInRequired),
         accountOutId: Yup.string().required(ErrorsStrings.AccountOutRequired),
@@ -126,8 +128,8 @@ const TransferScreen: React.FC = () => {
       } else {
         addToast({
           type: "error",
-          title: ErrorsStrings.ToastTitle,
-          description: ErrorsStrings.ToastMessage,
+          title: Global.ToastTitle,
+          description: Global.ToastMessage,
         });
         return;
       }
@@ -146,7 +148,7 @@ const TransferScreen: React.FC = () => {
 
       addToast({
         type: "error",
-        title: ErrorsStrings.ToastTitle,
+        title: Global.ToastTitle,
         description: errors[0].message,
       });
     }
@@ -178,7 +180,7 @@ const TransferScreen: React.FC = () => {
 
       addToast({
         type: "error",
-        title: ErrorsStrings.ToastTitle,
+        title: Global.ToastTitle,
         description: errors[0].message,
       });
     }

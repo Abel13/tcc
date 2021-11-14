@@ -1,11 +1,16 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Container, Body, List, ButtonContainer } from "./styles";
+
+import { PlanPage, Global } from "../../../locale/pt/dictionary.json";
+import { usePlan } from "../../../hooks/Plan";
+
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/web";
 import * as Yup from "yup";
 import dayjs from "dayjs";
-import { errorValidation, formatError } from "../../../utils/errorValidation";
+import { GroupProps } from "../../../components/atoms/Select/interfaces";
 
-import { OutgoingsPage, Global } from "../../../locale/pt/dictionary.json";
+import { errorValidation, formatError } from "../../../utils/errorValidation";
 
 import {
   Input,
@@ -16,49 +21,68 @@ import {
   ScrollView,
   EmptyData,
 } from "../../../components/atoms";
-import { OutgoingFormData } from "./interfaces";
-import { FormStateProps } from "../../../interfaces";
-import api from "../../../services/api";
+
 import { useToast } from "../../../hooks/Toast";
+import { useCategory } from "../../../hooks/Category";
+import { useDate } from "../../../hooks/Date";
+
 import {
   Header,
   ActionButtons,
-  ListItem,
   PageTitle,
 } from "../../../components/molecules";
-import { useOutgoing } from "../../../hooks/Outgoing";
-import { useAccount } from "../../../hooks/Account";
-import { GroupProps } from "../../../components/atoms/Select/interfaces";
-import { useDate } from "../../../hooks/Date";
-import { useCategory } from "../../../hooks/Category";
-import { Body, Container, List, ButtonContainer } from "./styles";
 import Colors from "../../../styles/colors.json";
+import { PlanFormData } from "./interfaces";
+import { FormStateProps } from "../../../interfaces";
+import { Plan } from "../../../models/plan";
 import { useGoal } from "../../../hooks/Goal";
+import ListItemPlan from "../../molecules/ListItemPlan";
 
-const OutgoingScreen: React.FC = () => {
-  const { FormTitle, Title, ErrorsStrings, SuccessStrings, Placeholders } =
-    OutgoingsPage;
+const PlanScreen: React.FC = () => {
+  const {
+    Placeholders,
+    FormTitle,
+    Title,
+    ErrorsStrings,
+    SuccessStrings,
+    RepeatItems,
+  } = PlanPage;
   const [formState, setFormState] = useState<FormStateProps>({
     status: "closed",
   });
-  const [initialData, setInitialData] = useState<OutgoingFormData>(
-    {} as OutgoingFormData
+  const [initialData, setInitialData] = useState<PlanFormData>(
+    {} as PlanFormData
   );
   const [editId, setEditId] = useState<string>("");
-  const [showGoals, setShowGoals] = useState<boolean>(false);
 
-  const { outgoings, total, loading, getOutgoings } = useOutgoing();
-  const { accounts, getAccounts } = useAccount();
+  const {
+    loading,
+    plans,
+    getPlan,
+    postPlan,
+    deletePlan,
+    updatePlan,
+    finishPlan,
+  } = usePlan();
   const { categories, getCategories } = useCategory();
   const { goals, getGoals } = useGoal();
 
-  const [accountItems, setAccountItems] = useState<GroupProps[]>(
-    {} as GroupProps[]
-  );
-  const [categoryItems, setCategoryItems] = useState<GroupProps[]>(
-    {} as GroupProps[]
-  );
-  const [goalItems, setGoalItems] = useState<GroupProps[]>({} as GroupProps[]);
+  const repeatItems: GroupProps[] = [
+    {
+      groupName: "REPETIR",
+      groupColor: Colors.warning,
+      items: [
+        { id: "once", value: RepeatItems.Never },
+        { id: "daily", value: RepeatItems.Daily },
+        { id: "weekly", value: RepeatItems.Weekly },
+        { id: "monthly", value: RepeatItems.Monthly },
+        { id: "yearly", value: RepeatItems.Yearly },
+      ],
+    },
+  ];
+  const [categoryItems, setCategoryItems] = useState<GroupProps[]>([]);
+  const [goalItems, setGoalItems] = useState<GroupProps[]>([]);
+  const [showGoals, setShowGoals] = useState<boolean>(false);
 
   const formRef = useRef<FormHandles>(null);
 
@@ -73,25 +97,13 @@ const OutgoingScreen: React.FC = () => {
   } = useDate();
 
   useEffect(() => {
-    if (accounts) {
-      const items: GroupProps[] = [
-        {
-          groupName: "CONTAS",
-          items: accounts
-            .filter((e) => {
-              return e.active;
-            })
-            .map((e) => {
-              return { id: e.secureId, value: e.name };
-            }),
-        },
-      ];
+    var items: GroupProps[] = [];
 
-      setAccountItems(items);
-    }
-  }, [accounts]);
-  useEffect(() => {
     if (categories) {
+      const incomings = categories.filter((e) => {
+        return e.group === "Renda";
+      });
+
       const fixedExpenses = categories.filter((e) => {
         return e.group === "Gastos Essenciais";
       });
@@ -99,7 +111,14 @@ const OutgoingScreen: React.FC = () => {
       const variableExpenses = categories.filter((e) => {
         return e.group === "Estilo de Vida";
       });
-      var items: GroupProps[] = [];
+
+      items.push({
+        groupName: "RECEITA/ENTRADAS",
+        groupColor: Colors.revenues,
+        items: incomings.map((e) => {
+          return { id: e.secureId, value: e.name };
+        }),
+      });
 
       items.push({
         groupName: "GASTOS FIXOS/ESSENCIAIS",
@@ -118,7 +137,7 @@ const OutgoingScreen: React.FC = () => {
       });
 
       items.push({
-        groupName: "RESGATE",
+        groupName: "INVESTIMENTO",
         groupColor: Colors.investments,
         items: [{ id: "investment", value: "Investimento" }],
       });
@@ -128,15 +147,16 @@ const OutgoingScreen: React.FC = () => {
   }, [categories]);
 
   useEffect(() => {
+    var items: GroupProps[] = [];
+
     if (goals) {
-      const items: GroupProps[] = [
-        {
-          groupName: "METAS",
-          items: goals.map((e) => {
-            return { id: e.secureId, value: e.description };
-          }),
-        },
-      ];
+      items.push({
+        groupName: "METAS/INVESTIMENTOS",
+        groupColor: Colors.investments,
+        items: goals.map((e) => {
+          return { id: e.secureId, value: e.description };
+        }),
+      });
 
       setGoalItems(items);
     }
@@ -144,7 +164,6 @@ const OutgoingScreen: React.FC = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      await getAccounts();
       await getCategories();
       await getGoals();
     };
@@ -154,33 +173,40 @@ const OutgoingScreen: React.FC = () => {
 
   const handleAdd = async () => {
     setFormState({ status: "add" });
-    setInitialData({} as OutgoingFormData);
+    setInitialData({} as PlanFormData);
   };
 
-  const handleSubmit = async (data: OutgoingFormData) => {
+  const handleSubmit = async (data: PlanFormData) => {
+    console.log(data);
     try {
       formRef.current?.setErrors({});
       const schema = Yup.object().shape({
         description: Yup.string().required(ErrorsStrings.DescriptionRequired),
         value: Yup.number()
+          .typeError(ErrorsStrings.ValueRequired)
           .required(ErrorsStrings.ValueRequired)
           .min(0.01, ErrorsStrings.ValueMin),
-        date: Yup.string().required(ErrorsStrings.DateRequired),
-        accountId: Yup.string().required(ErrorsStrings.AccountRequired),
+        dueDate: Yup.string().required(ErrorsStrings.DateRequired),
         categoryId: Yup.string().required(ErrorsStrings.CategoryRequired),
+        goalId: Yup.string().when("categoryId", {
+          is: "investment",
+          then: Yup.string().required(ErrorsStrings.GoalRequired),
+        }),
+        repeat: Yup.string().required(ErrorsStrings.RepeatRequired),
       });
+
       await schema.validate(data, { abortEarly: false });
 
-      const body = {
-        description: data.description,
-        value: data.value,
-        date: data.date,
-        categoryId: data.categoryId,
-        accountId: data.accountId,
-      };
+      if (data.categoryId === "investment") {
+        data = {
+          ...data,
+          categoryId: null,
+        };
+      }
 
       if (formState.status === "edit") {
-        await api.put(`/outgoings/${editId}`, body);
+        console.log("edit", editId);
+        await updatePlan(editId, data);
         setEditId("");
         addToast({
           type: "success",
@@ -188,7 +214,7 @@ const OutgoingScreen: React.FC = () => {
           description: SuccessStrings.ToastEditMessage,
         });
       } else if (formState.status === "add") {
-        await api.post("/outgoings", body);
+        await postPlan(data);
         addToast({
           type: "success",
           title: SuccessStrings.ToastTitle,
@@ -202,17 +228,13 @@ const OutgoingScreen: React.FC = () => {
         });
         return;
       }
-
       setFormState({ status: "closed" });
-      getOutgoings(actualDate, endOfThisMonth);
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
         const errors = errorValidation(err);
-
         formRef.current?.setErrors(errors);
         return;
       }
-
       const errors = formatError(err);
 
       addToast({
@@ -222,25 +244,28 @@ const OutgoingScreen: React.FC = () => {
       });
     }
   };
-
   const handleEdit = (key: string) => {
     setFormState({ status: "edit" });
 
-    const outgoing = outgoings.find((a) => a.secureId === key);
+    const plan = plans.find((a) => a.secureId === key);
 
-    if (outgoing) {
+    if (plan) {
       setEditId(key);
-      setInitialData({
-        ...outgoing,
-        date: dayjs(outgoing.date).format("YYYY-MM-DD"),
-      });
+      setShowGoals(plan.category === null);
+      const editPlan = {
+        ...plan,
+        dueDate: dayjs(plan.dueDate).format("YYYY-MM-DD"),
+        categoryId: plan.categoryId ? plan.categoryId : "investment",
+      };
+
+      setInitialData(editPlan);
     }
   };
-
-  const handleDelete = async (key: string) => {
+  const handleDelete = async (secureId: string) => {
+    setFormState({ status: "closed" });
     try {
-      await api.delete(`/outgoings/${key}`);
-      getOutgoings(actualDate, endOfThisMonth);
+      await deletePlan(secureId);
+
       addToast({
         type: "success",
         title: SuccessStrings.ToastTitle,
@@ -248,7 +273,27 @@ const OutgoingScreen: React.FC = () => {
       });
     } catch (err) {
       const errors = formatError(err);
+      addToast({
+        type: "error",
+        title: Global.ToastTitle,
+        description: errors[0].message,
+      });
+    }
+  };
 
+  const handleFinish = async (status: boolean, secureId: string) => {
+    setFormState({ status: "closed" });
+
+    try {
+      await finishPlan(secureId, status);
+
+      addToast({
+        type: "success",
+        title: SuccessStrings.ToastTitle,
+        description: SuccessStrings.ToastFinishMessage,
+      });
+    } catch (err) {
+      const errors = formatError(err);
       addToast({
         type: "error",
         title: Global.ToastTitle,
@@ -258,7 +303,8 @@ const OutgoingScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    getOutgoings(actualDate, endOfThisMonth);
+    if (actualDate !== undefined && endOfThisMonth !== undefined)
+      getPlan(actualDate, endOfThisMonth);
   }, [actualDate, endOfThisMonth]);
 
   const handleForwardMonth = useCallback(() => {
@@ -269,23 +315,20 @@ const OutgoingScreen: React.FC = () => {
     previousMonth();
   }, [actualDate, endOfThisMonth]);
 
-  const loadList = useCallback(() => {
-    return outgoings && outgoings.length > 0 ? (
-      outgoings.map((item) => (
-        <ListItem
-          description={item.description}
-          data={item.accountName}
-          subDescription={item.value}
-          status={item.date}
-          secureId={item.secureId}
+  const planList = useCallback(() => {
+    return plans && plans.length > 0 ? (
+      plans.map((item: Plan) => (
+        <ListItemPlan
+          plan={item}
           editItem={handleEdit}
           deleteItem={handleDelete}
+          finishPlan={handleFinish}
         />
       ))
     ) : (
       <EmptyData />
     );
-  }, [outgoings]);
+  }, [plans]);
 
   return (
     <Container>
@@ -294,7 +337,7 @@ const OutgoingScreen: React.FC = () => {
         <div>
           <PageTitle
             title={Title}
-            total={total}
+            total={0}
             month={actualMonth}
             year={actualYear}
             forwardMonth={handleForwardMonth}
@@ -315,11 +358,12 @@ const OutgoingScreen: React.FC = () => {
                   />
                 </DynamicContent>
               ) : (
-                loadList()
+                planList()
               )}
             </List>
           </ScrollView>
         </div>
+
         <DynamicContent visible={formState.status !== "closed"}>
           <Form ref={formRef} initialData={initialData} onSubmit={handleSubmit}>
             <h1>{FormTitle}</h1>
@@ -327,48 +371,40 @@ const OutgoingScreen: React.FC = () => {
             <Input
               maxLength={25}
               name="description"
-              placeholder="Description"
+              placeholder={Placeholders.Description}
             />
             <Input
               name="value"
-              placeholder="Valor"
+              placeholder={Placeholders.Value}
               dataType="currency"
-              disabled={
-                formState.status === "edit" || formState.status === "read"
-              }
+              disabled={formState.status === "read"}
             />
-            <Input type="date" name="date" placeholder="Data" />
+            <Input type="date" name="dueDate" placeholder={Placeholders.Date} />
             <Select
               name="categoryId"
               groups={categoryItems}
               placeholder={Placeholders.Category}
-              disabled={formState.status === "read"}
-              onChange={(e) => {
-                const visible =
-                  e.currentTarget.value ===
-                  categories.find((i) => i.secureId === "investment").secureId;
-                setShowGoals(visible);
+              onChange={() => {
+                const investmentSelected =
+                  formRef.current.getFieldValue("categoryId") === "investment";
+                setShowGoals(investmentSelected);
               }}
+              disabled={formState.status === "read"}
             />
-            <DynamicContent visible={showGoals} style={{ marginBottom: 8 }}>
+            {showGoals && (
               <Select
                 name="goalId"
                 groups={goalItems}
-                placeholder={Placeholders.Rescue}
-                disabled={
-                  formState.status === "edit" || formState.status === "read"
-                }
+                placeholder={Placeholders.Goal}
+                disabled={formState.status === "read"}
               />
-            </DynamicContent>
+            )}
             <Select
-              name="accountId"
-              groups={accountItems}
-              placeholder={Placeholders.Account}
-              disabled={
-                formState.status === "edit" || formState.status === "read"
-              }
+              name="repeat"
+              groups={repeatItems}
+              placeholder={Placeholders.Repeat}
+              disabled={formState.status === "read" || initialData.done}
             />
-
             <ActionButtons
               loading={!!loading}
               cancelAction={() => setFormState({ status: "closed" })}
@@ -380,4 +416,4 @@ const OutgoingScreen: React.FC = () => {
   );
 };
 
-export default OutgoingScreen;
+export default PlanScreen;

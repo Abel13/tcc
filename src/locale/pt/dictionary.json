@@ -1,11 +1,13 @@
 {
+  "Global": {
+    "ToastTitle": "Ops!",
+    "ToastMessage": "Ocorreu um erro ao processar a sua solicitação. Por favor, tente novamente mais tarde."
+  },
   "SignInPage": {
     "ErrorsStrings": {
       "EmailRequired": "E-Mail obrigatório!",
       "InvalidEmail": "E-mail inválido!",
-      "PasswordRequired": "Senha obrigatória!",
-      "ToastTitle": "Ops!",
-      "ToastMessage": "Ocorreu um erro ao fazer login! Cheque suas credenciais."
+      "PasswordRequired": "Senha obrigatória!"
     },
     "FormStrings": {
       "Title": "Faça seu login",
@@ -28,9 +30,7 @@
       "PasswordRequired": "Senha obrigatória!",
       "InvalidPassword": "A senha precisa ter no mínimo 6 caracteres!",
       "ConfirmPasswordRequired": "Confirmação de senha obrigatória!",
-      "PasswordDoesNotMatch": "As senhas precisam ser iguais!",
-      "ToastTitle": "Ops!",
-      "ToastMessage": "Ocorreu um erro ao fazer seu cadastro!"
+      "PasswordDoesNotMatch": "As senhas precisam ser iguais!"
     },
     "FormStrings": {
       "Title": "Faça seu cadastro",
@@ -59,9 +59,7 @@
       "PasswordRequired": "Senha obrigatória!",
       "InvalidPassword": "A senha precisa ter no mínimo 6 caracteres!",
       "ConfirmPasswordRequired": "Confirmação de senha obrigatória!",
-      "PasswordDoesNotMatch": "As senhas precisam ser iguais!",
-      "ToastTitle": "Ops!",
-      "ToastMessage": "Ocorreu um erro ao alterar o perfil!"
+      "PasswordDoesNotMatch": "As senhas precisam ser iguais!"
     },
     "FormStrings": {
       "NamePlaceholder": "Nome",
@@ -91,9 +89,7 @@
     "ErrorsStrings": {
       "DescriptionRequired": "Descrição é obrigatória!",
       "GoalValueRequired": "O valor deve ser no mínimo zero!",
-      "DateRequired": "Data obrigatória!",
-      "ToastTitle": "Ops!",
-      "ToastMessage": "Ocorreu um erro ao cadastrar o investimento!"
+      "DateRequired": "Data obrigatória!"
     },
     "SuccessStrings": {
       "ToastTitle": "Pronto!",
@@ -112,9 +108,7 @@
     "ErrorsStrings": {
       "NameRequired": "Nome obrigatório!",
       "InitialBalanceRequired": "Valor inicial obrigatório!",
-      "InitialBalanceMin": "Valor inicial inválido!",
-      "ToastTitle": "Ops!",
-      "ToastMessage": "Ocorreu um erro ao cadastrar a conta!"
+      "InitialBalanceMin": "Valor inicial inválido!"
     },
     "SuccessStrings": {
       "ToastTitle": "Pronto!",
@@ -131,22 +125,59 @@
       "Value": "Valor",
       "Date": "Data",
       "Category": "Selecione a categoria",
+      "Rescue": "Selecione a meta",
       "Account": "Selecione a conta"
     },
     "ErrorsStrings": {
       "DescriptionRequired": "Descrição obrigatória!",
       "CategoryRequired": "Categoria obrigatório!",
       "ValueRequired": "Valor obrigatório!",
+      "ValueMin": "O valor não pode ser zero!",
       "DateRequired": "Data obrigatória!",
-      "AccountRequired": "Conta obrigatória!",
-      "ToastTitle": "Ops!",
-      "ToastMessage": "Ocorreu um erro ao cadastrar a saída!"
+      "AccountRequired": "Conta obrigatória!"
     },
     "SuccessStrings": {
       "ToastTitle": "Pronto!",
       "ToastCreateMessage": "Saída cadastrada com sucesso!",
       "ToastEditMessage": "Saída alterada com sucesso!",
       "ToastDeleteMessage": "Saída excluída com sucesso!"
+    }
+  },
+  "PlanPage": {
+    "Title": "Planejamento Financeiro",
+    "FormTitle": "Planejamento",
+    "RepeatItems": {
+      "Never": "Não Repetir",
+      "Daily": "Diariamente",
+      "Weekly": "Semanalmente",
+      "Monthly": "Mensalmente",
+      "Yearly": "Anualmente"
+    },
+    "Placeholders": {
+      "Description": "Descrição",
+      "Value": "Valor",
+      "Date": "Data",
+      "Category": "Selecione a categoria",
+      "Goal": "Selecione o investimento",
+      "Repeat": "Repetir",
+      "Account": "Selecione a conta"
+    },
+    "ErrorsStrings": {
+      "DescriptionRequired": "Descrição obrigatória!",
+      "ValueRequired": "Valor obrigatório!",
+      "ValueMin": "O valor não pode ser zero!",
+      "DateRequired": "Data obrigatória!",
+      "AccountRequired": "Conta obrigatória!",
+      "CategoryRequired": "Categoria obrigatória!",
+      "GoalRequired": "Investimento obrigatório!",
+      "RepeatRequired": "Selecione um item"
+    },
+    "SuccessStrings": {
+      "ToastTitle": "Pronto!",
+      "ToastCreateMessage": "Planejamento cadastrado com sucesso!",
+      "ToastEditMessage": "Planejamento alterado com sucesso!",
+      "ToastDeleteMessage": "Planejamento excluído com sucesso!",
+      "ToastFinishMessage": "Status do planejamento alterado com sucesso!"
     }
   },
   "IncomingsPage": {
@@ -162,11 +193,10 @@
     "ErrorsStrings": {
       "DescriptionRequired": "Descrição obrigatória!",
       "ValueRequired": "Valor obrigatório!",
+      "ValueMin": "O valor não pode ser zero!",
       "DateRequired": "Data obrigatória!",
       "AccountRequired": "Conta obrigatória!",
-      "CategoryRequired": "Categoria obrigatória!",
-      "ToastTitle": "Ops!",
-      "ToastMessage": "Ocorreu um erro ao cadastrar a entrada!"
+      "CategoryRequired": "Categoria obrigatória!"
     },
     "SuccessStrings": {
       "ToastTitle": "Pronto!",
@@ -181,11 +211,10 @@
     "ErrorsStrings": {
       "DescriptionRequired": "Descrição obrigatória!",
       "ValueRequired": "Valor obrigatório!",
+      "ValueMin": "O valor não pode ser zero!",
       "DateRequired": "Data obrigatória!",
       "AccountInRequired": "Conta de entrada obrigatória!",
-      "AccountOutRequired": "Conta de saída obrigatória!",
-      "ToastTitle": "Ops!",
-      "ToastMessage": "Ocorreu um erro ao cadastrar a entrada!"
+      "AccountOutRequired": "Conta de saída obrigatória!"
     },
     "SuccessStrings": {
       "ToastTitle": "Pronto!",

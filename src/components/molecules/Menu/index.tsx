@@ -6,7 +6,12 @@ import {
   AiOutlineSwap,
 } from "react-icons/ai";
 import { BiRocket } from "react-icons/bi";
-import { FiMinusSquare, FiPlusSquare } from "react-icons/fi";
+import {
+  FiCalendar,
+  FiMinusSquare,
+  FiPieChart,
+  FiPlusSquare,
+} from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useSpring } from "react-spring";
 import { Button, ScrollView } from "../../atoms";
@@ -68,6 +73,22 @@ const Menu: React.FC = () => {
               <div>
                 <span>Metas</span>
                 <BiRocket />
+              </div>
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link to="/plan">
+              <div>
+                <span>Planejamento</span>
+                <FiCalendar />
+              </div>
+            </Link>
+          </MenuItem>
+          <MenuItem>
+            <Link to="/cashflow">
+              <div>
+                <span>Fluxo de Caixa</span>
+                <FiPieChart />
               </div>
             </Link>
           </MenuItem>
