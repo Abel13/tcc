@@ -344,9 +344,12 @@ const OutgoingScreen: React.FC = () => {
               placeholder={Placeholders.Category}
               disabled={formState.status === "read"}
               onChange={(e) => {
+                const investmentSelected = categories.find(
+                  (i) => i.secureId === "investment"
+                );
                 const visible =
-                  e.currentTarget.value ===
-                  categories.find((i) => i.secureId === "investment").secureId;
+                  investmentSelected &&
+                  e.currentTarget.value === investmentSelected.secureId;
                 setShowGoals(visible);
               }}
             />
