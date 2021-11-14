@@ -4,7 +4,7 @@ import { Form } from "@unform/web";
 import * as Yup from "yup";
 import { errorValidation, formatError } from "../../../utils/errorValidation";
 
-import { AccountsPage } from "../../../locale/pt/dictionary.json";
+import { AccountsPage, Global } from "../../../locale/pt/dictionary.json";
 
 import {
   Input,
@@ -84,8 +84,8 @@ const AccountsScreen: React.FC = () => {
       } else {
         addToast({
           type: "error",
-          title: ErrorsStrings.ToastTitle,
-          description: ErrorsStrings.ToastMessage,
+          title: Global.ToastTitle,
+          description: Global.ToastMessage,
         });
         return;
       }
@@ -104,7 +104,7 @@ const AccountsScreen: React.FC = () => {
 
       addToast({
         type: "error",
-        title: ErrorsStrings.ToastTitle,
+        title: Global.ToastTitle,
         description: errors[0].message,
       });
     }
@@ -133,7 +133,7 @@ const AccountsScreen: React.FC = () => {
 
       addToast({
         type: "error",
-        title: ErrorsStrings.ToastTitle,
+        title: Global.ToastTitle,
         description: errors[0].message,
       });
     }
@@ -150,7 +150,7 @@ const AccountsScreen: React.FC = () => {
 
       addToast({
         type: "error",
-        title: ErrorsStrings.ToastTitle,
+        title: Global.ToastTitle,
         description: errors[0].message,
       });
     }

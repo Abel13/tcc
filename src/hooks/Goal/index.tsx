@@ -1,7 +1,7 @@
-import React, { createContext, useCallback, useContext, useState } from 'react';
+import React, { createContext, useCallback, useContext, useState } from "react";
 
-import api from '../../services/api';
-import { GoalContextData, GoalList, GoalState } from './interfaces';
+import api from "../../services/api";
+import { GoalContextData, GoalList, GoalState } from "./interfaces";
 
 const GoalContext = createContext<GoalContextData>({} as GoalContextData);
 
@@ -13,12 +13,12 @@ export const GoalProvider: React.FC = ({ children }) => {
 
   const getGoals = useCallback(async () => {
     setData({ ...data, loading: true });
-    const response = await api.get<GoalList>('goals');
+    const response = await api.get<GoalList>("goals");
 
     const { goals } = response.data;
     if (goals && goals.length > 0) {
       const totalBalance = goals
-        .map(e => {
+        .map((e) => {
           return Number(e.goalBalance);
         })
         .reduce(reducer);
@@ -46,7 +46,7 @@ export function useGoal(): GoalContextData {
   const context = useContext(GoalContext);
 
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useGoal must be used within an AuthProvider");
   }
 
   return context;

@@ -1,8 +1,8 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
 
-import Colors from '../../../styles/colors.json';
-import Tooltip from '../Tooltip';
-import { ContainerProps } from './interfaces';
+import Colors from "../../../styles/colors.json";
+import Tooltip from "../Tooltip";
+import { ContainerProps } from "./interfaces";
 
 export const Container = styled.div<ContainerProps>`
   background: ${Colors.inputs};
@@ -19,7 +19,7 @@ export const Container = styled.div<ContainerProps>`
     margin-top: 8px;
   }
 
-  ${props =>
+  ${(props) =>
     props.gotError &&
     css`
       transition: border-bottom-color 0.8s;
@@ -27,7 +27,7 @@ export const Container = styled.div<ContainerProps>`
       border-bottom-color: ${Colors.danger};
     `}
 
-  ${props =>
+  ${(props) =>
     props.isFocused &&
     css`
       transition: border-bottom-color 0.8s;
@@ -36,7 +36,7 @@ export const Container = styled.div<ContainerProps>`
       color: ${Colors.primary};
     `}
 
-  ${props =>
+  ${(props) =>
     props.isFilled &&
     css`
       color: ${Colors.primary};
@@ -47,7 +47,7 @@ export const Container = styled.div<ContainerProps>`
     border: 0;
     background: transparent;
 
-    ${props =>
+    ${(props) =>
       props.disabled
         ? css`
             color: ${Colors.grayHard};
@@ -82,7 +82,6 @@ export const Currency = styled.div`
 
 export const Error = styled(Tooltip)`
   height: 20px;
-  margin-left: 16px;
 
   svg {
     margin: 0;

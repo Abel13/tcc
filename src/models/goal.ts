@@ -3,5 +3,4 @@ export interface Goal {
   description: string;
   goalValue: number;
   goalBalance: number;
-  active: boolean;
 }

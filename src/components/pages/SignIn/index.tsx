@@ -12,7 +12,7 @@ import { errorValidation, formatError } from "../../../utils/errorValidation";
 
 import {} from "../../../components/atoms";
 import { Content, AnimationContainer, Container } from "./styles";
-import { SignInPage } from "../../../locale/pt/dictionary.json";
+import { SignInPage, Global } from "../../../locale/pt/dictionary.json";
 import { SignInFormData } from "./interfaces";
 import { Login } from "../../organisms";
 
@@ -60,7 +60,7 @@ const SignIn: React.FC = () => {
 
       addToast({
         type: "error",
-        title: ErrorsStrings.ToastTitle,
+        title: Global.ToastTitle,
         description: errors[0].message,
       });
     }

@@ -83,7 +83,7 @@ export const CustomOption = styled.option`
 
 export const Error = styled(Tooltip)`
   height: 20px;
-  margin-left: 16px;
+  margin-right: 16px;
 
   svg {
     margin: 0;

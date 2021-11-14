@@ -13,3 +13,4 @@ export { default as ChartBar } from "./ChartBar";
 export { default as Calendar } from "./Calendar";
 export { default as Card } from "./Card";
 export { default as ContentLoader } from "./ContentLoader";
+export { default as Check } from "./Check";

@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import dayjs from "dayjs";
 import { errorValidation, formatError } from "../../../utils/errorValidation";
 
-import { IncomingsPage } from "../../../locale/pt/dictionary.json";
+import { IncomingsPage, Global } from "../../../locale/pt/dictionary.json";
 
 import {
   Input,
@@ -125,7 +125,9 @@ const IncomingScreen: React.FC = () => {
       formRef.current?.setErrors({});
       const schema = Yup.object().shape({
         description: Yup.string().required(ErrorsStrings.DescriptionRequired),
-        value: Yup.string().required(ErrorsStrings.ValueRequired),
+        value: Yup.number()
+          .required(ErrorsStrings.ValueRequired)
+          .min(0.01, ErrorsStrings.ValueMin),
         date: Yup.string().required(ErrorsStrings.DateRequired),
         accountId: Yup.string().required(ErrorsStrings.AccountRequired),
         categoryId: Yup.string().required(ErrorsStrings.CategoryRequired),
@@ -158,8 +160,8 @@ const IncomingScreen: React.FC = () => {
       } else {
         addToast({
           type: "error",
-          title: ErrorsStrings.ToastTitle,
-          description: ErrorsStrings.ToastMessage,
+          title: Global.ToastTitle,
+          description: Global.ToastMessage,
         });
         return;
       }
@@ -178,7 +180,7 @@ const IncomingScreen: React.FC = () => {
 
       addToast({
         type: "error",
-        title: ErrorsStrings.ToastTitle,
+        title: Global.ToastTitle,
         description: errors[0].message,
       });
     }
@@ -210,7 +212,7 @@ const IncomingScreen: React.FC = () => {
 
       addToast({
         type: "error",
-        title: ErrorsStrings.ToastTitle,
+        title: Global.ToastTitle,
         description: errors[0].message,
       });
     }

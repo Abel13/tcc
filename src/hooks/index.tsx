@@ -10,25 +10,29 @@ import { TransferProvider } from "./Transfer";
 import { ToastProvider } from "./Toast";
 import { GoalProvider } from "./Goal";
 import { DashboardProvider } from "./Dashboard";
+import { CashFlowProvider } from "./CashFlow";
+import { PlanProvider } from "./Plan";
 
 const AppProvider: React.FC = ({ children }) => (
   <AuthProvider>
     <ToastProvider>
       <DateProvider>
         <DashboardProvider>
-          {/* <CashFlowProvider> */}
-          <AccountProvider>
-            <GoalProvider>
-              <CategoryProvider>
-                <OutgoingProvider>
-                  <IncomingProvider>
-                    <TransferProvider>{children}</TransferProvider>
-                  </IncomingProvider>
-                </OutgoingProvider>
-              </CategoryProvider>
-            </GoalProvider>
-          </AccountProvider>
-          {/* </CashFlowProvider> */}
+          <CashFlowProvider>
+            <PlanProvider>
+              <AccountProvider>
+                <GoalProvider>
+                  <CategoryProvider>
+                    <OutgoingProvider>
+                      <IncomingProvider>
+                        <TransferProvider>{children}</TransferProvider>
+                      </IncomingProvider>
+                    </OutgoingProvider>
+                  </CategoryProvider>
+                </GoalProvider>
+              </AccountProvider>
+            </PlanProvider>
+          </CashFlowProvider>
         </DashboardProvider>
       </DateProvider>
     </ToastProvider>

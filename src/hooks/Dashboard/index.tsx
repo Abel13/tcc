@@ -17,9 +17,11 @@ export const DashboardProvider: React.FC = ({ children }) => {
 
     const { accounts, totalBalance, timeline, earnings } = response.data;
 
-    const datedTimeLine = timeline.map((item) => {
-      return { ...item, date: dayjs(item.date).add(1, "d").toDate() };
-    });
+    const datedTimeLine =
+      timeline &&
+      timeline.map((item) => {
+        return { ...item, date: dayjs(item.date).add(1, "d").toDate() };
+      });
 
     setData({
       earnings,

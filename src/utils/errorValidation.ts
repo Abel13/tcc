@@ -1,4 +1,4 @@
-import { object, ValidationError } from 'yup';
+import { object, ValidationError } from "yup";
 
 interface Errors {
   [key: string]: string;
@@ -16,15 +16,13 @@ export function errorValidation(err: ValidationError): Errors {
   const ValidationErrors: Errors = {};
 
   err.inner.forEach((error: ValidationError) => {
-    if(error.path)
-      ValidationErrors[error.path] = error.message;
+    if (error.path) ValidationErrors[error.path] = error.message;
   });
   return ValidationErrors;
 }
 
 export function formatError(err: any): ResponseErrors[] {
   const ValidationErrors: ResponseErrors[] = [];
-
   try {
     const { response } = err;
     const { data } = response;
@@ -35,13 +33,12 @@ export function formatError(err: any): ResponseErrors[] {
       });
     } else {
       ValidationErrors.push({
-        message: 'Ocorreu um erro ao executar a operação!',
+        message: "Ocorreu um erro ao executar a operação!",
       });
     }
   } catch (error) {
-    console.log('ERROR', error);
     ValidationErrors.push({
-      message: 'Ocorreu um erro ao executar a operação!',
+      message: "Ocorreu um erro ao executar a operação!",
     });
   }
   return ValidationErrors;
