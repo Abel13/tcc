@@ -7,7 +7,7 @@ export interface Plan {
   goalId?: string;
   group: string;
   value: number;
-  dueDate: string;
+  dueDate: Date;
   description: string;
   category?: string;
   goal?: string;

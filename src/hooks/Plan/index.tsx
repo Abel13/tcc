@@ -31,9 +31,23 @@ export const PlanProvider: React.FC = ({ children }) => {
 
       const response = await api.get<Plan[]>(`plan/${startDate}/${endDate}`);
 
+      const plans = response.data;
+
+      let datedPlans = [] as Plan[];
+      if (plans && plans.length > 0) {
+        datedPlans = plans.map<Plan>((item: Plan) => {
+          return {
+            ...item,
+            dueDate: dayjs(item.dueDate).add(1, "d").toDate(),
+          };
+        }) as Plan[];
+      }
+
+      console.log(datedPlans);
+
       setData({
         loading: false,
-        plans: response.data,
+        plans: datedPlans,
       });
     },
     [data]
@@ -104,7 +118,7 @@ export const PlanProvider: React.FC = ({ children }) => {
                 group: response.data.group,
                 description: response.data.description,
                 value: response.data.value,
-                dueDate: response.data.dueDate,
+                dueDate: dayjs(response.data.dueDate).add(1, "d").toDate(),
                 repeat: response.data.repeat,
                 done: response.data.done,
                 category: response.data.category,
@@ -166,7 +180,9 @@ export const PlanProvider: React.FC = ({ children }) => {
     <PlanContext.Provider
       value={{
         loading: data.loading,
-        plans: data.plans.sort((a, b) => a.dueDate.localeCompare(b.dueDate)),
+        plans: data.plans.sort((a, b) =>
+          a.dueDate.toDateString().localeCompare(b.dueDate.toDateString())
+        ),
         getPlan,
         postPlan,
         deletePlan,
