@@ -32,6 +32,23 @@ export const CashFlowProvider: React.FC = ({ children }) => {
       fixedOutgoings,
     } = response.data;
 
+    const sumRealized =
+      Number(totalVariable) + Number(totalFixed) + Number(totalInvestments);
+    const sumPlan =
+      Number(totalVariablePlan) +
+      Number(totalFixedPlan) +
+      Number(totalInvestmentsPlan);
+
+    const planIssue =
+      totalInvestmentsPlan / sumPlan < 0.2 ||
+      totalFixedPlan / sumPlan > 0.5 ||
+      totalVariablePlan / sumPlan > 0.3;
+
+    const realizedIssue =
+      totalInvestments / sumRealized < 0.2 ||
+      totalFixed / sumRealized > 0.5 ||
+      totalVariable / sumRealized > 0.3;
+
     setData({
       totalIncomings,
       totalIncomingsPlan,
@@ -47,7 +64,9 @@ export const CashFlowProvider: React.FC = ({ children }) => {
       fixedOutgoings,
       investments,
 
-      planIssue: false,
+      planIssue,
+      realizedIssue,
+
       loading: false,
     });
   }, []);
@@ -70,6 +89,7 @@ export const CashFlowProvider: React.FC = ({ children }) => {
         investments: data.investments,
 
         planIssue: data.planIssue,
+        realizedIssue: data.realizedIssue,
 
         loading: data.loading,
         getCashFlow,

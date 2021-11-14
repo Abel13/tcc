@@ -45,6 +45,7 @@ export const Container = styled.div<ContainerProps>`
 `;
 
 export const CustomSelect = styled.select`
+  display: flex;
   flex: 1;
   border: 0;
   background: transparent;
@@ -83,7 +84,6 @@ export const CustomOption = styled.option`
 
 export const Error = styled(Tooltip)`
   height: 20px;
-  margin-right: 16px;
 
   svg {
     margin: 0;

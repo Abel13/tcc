@@ -4,15 +4,15 @@ import React, {
   useEffect,
   useRef,
   useState,
-} from 'react';
-import { IconBaseProps } from 'react-icons';
-import { FiAlertCircle } from 'react-icons/fi';
-import { useField } from '@unform/core';
+} from "react";
+import { IconBaseProps } from "react-icons";
+import { FiAlertCircle } from "react-icons/fi";
+import { useField } from "@unform/core";
 
-import { Container, Error, Currency } from './styles';
-import Colors from '../../../styles/colors.json';
-import Tooltip from '../Tooltip';
-import { InputProps, InputValueReference } from './interfaces';
+import { Container, Error, Currency } from "./styles";
+import Colors from "../../../styles/colors.json";
+import Tooltip from "../Tooltip";
+import { InputProps, InputValueReference } from "./interfaces";
 
 const Input: React.FC<InputProps> = ({
   name,
@@ -41,10 +41,10 @@ const Input: React.FC<InputProps> = ({
     registerField<string>({
       name: fieldName,
       ref: inputRef.current,
-      path: 'value',
+      path: "value",
       clearValue(ref: HTMLInputElement) {
-        ref.value = '';
-        inputRef.current?.setAttribute('value', '');
+        ref.value = "";
+        inputRef.current?.setAttribute("value", "");
       },
       setValue(_: HTMLInputElement, value: string) {
         if (inputRef.current) {
@@ -56,14 +56,14 @@ const Input: React.FC<InputProps> = ({
 
   const format = (value: number) => value * 0.01;
   const stringToNumber = (value: string): number => {
-    const newValue = parseInt(value.replace(/\./g, ''), 10);
+    const newValue = parseInt(value.replace(/\./g, ""), 10);
     return newValue >= 0 ? newValue : 0;
   };
   const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const { target: input } = event;
 
     const value = stringToNumber(input.value);
-    const valueFormatted = value === 0 ? '0.00' : format(value).toFixed(2);
+    const valueFormatted = value === 0 ? "0.00" : format(value).toFixed(2);
     if (inputRef.current) {
       inputRef.current.value = valueFormatted;
     }
@@ -71,7 +71,7 @@ const Input: React.FC<InputProps> = ({
 
   const inputType = () => {
     switch (dataType) {
-      case 'currency':
+      case "currency":
         return (
           <input
             onFocus={handleInputFocus}
@@ -108,7 +108,7 @@ const Input: React.FC<InputProps> = ({
       isFocused={isFocused}
     >
       {LeftIcon && <LeftIcon size={20} />}
-      {dataType === 'currency' && <Currency>R$</Currency>}
+      {dataType === "currency" && <Currency>R$</Currency>}
       {inputType()}
 
       {error && (

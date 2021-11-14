@@ -1,19 +1,20 @@
 import styled, { css } from "styled-components";
 import Colors from "../../../styles/colors.json";
 import { CashFlowData } from "./interfaces";
+import { Tooltip } from "../../atoms";
 
 const kindVariations = {
   revenue: css`
-    background: ${Colors.warning};
+    background: ${Colors.revenues};
   `,
   investment: css`
-    background: ${Colors.info};
+    background: ${Colors.investments};
   `,
   fixed: css`
-    background: ${Colors.danger};
+    background: ${Colors.fixedExpenses};
   `,
   variable: css`
-    background: ${Colors.success};
+    background: ${Colors.variableExpenses};
   `,
   total: css`
     background: ${Colors.secondary};
@@ -90,12 +91,28 @@ export const CarriedOutChart = styled.div`
   border: 1px ${Colors.whiteTransparent} solid;
 `;
 
-export const PlannedContainer = styled.div`
+export const HeaderContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 
   svg {
     color: ${Colors.danger};
+  }
+`;
+
+export const Error = styled(Tooltip)`
+  height: 20px;
+
+  svg {
+    margin: 0;
+  }
+
+  span {
+    background: ${Colors.danger};
+
+    &::before {
+      border-color: ${Colors.danger} transparent;
+    }
   }
 `;

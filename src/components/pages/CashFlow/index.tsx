@@ -23,7 +23,8 @@ import {
   CarriedOutChart,
   GridContainer,
   CashFlowReport,
-  PlannedContainer,
+  HeaderContainer,
+  Error,
 } from "./styles";
 import { useCashFLow } from "../../../hooks/CashFlow";
 import { FiAlertTriangle } from "react-icons/fi";
@@ -53,6 +54,7 @@ const CashFlowScreen: React.FC = () => {
     fixedOutgoings,
 
     planIssue,
+    realizedIssue,
 
     getCashFlow,
   } = useCashFLow();
@@ -61,17 +63,17 @@ const CashFlowScreen: React.FC = () => {
     {
       name: "Fixos",
       value: Number(totalFixed),
-      color: Colors.danger,
+      color: Colors.fixedExpenses,
     },
     {
       name: "Variáveis",
       value: Number(totalVariable),
-      color: Colors.success,
+      color: Colors.variableExpenses,
     },
     {
       name: "Investimentos",
       value: Number(totalInvestments),
-      color: Colors.info,
+      color: Colors.investments,
     },
   ];
 
@@ -79,17 +81,17 @@ const CashFlowScreen: React.FC = () => {
     {
       name: "Fixos",
       value: Number(totalFixedPlan),
-      color: Colors.danger,
+      color: Colors.fixedExpenses,
     },
     {
       name: "Variáveis",
       value: Number(totalVariablePlan),
-      color: Colors.success,
+      color: Colors.variableExpenses,
     },
     {
       name: "Investimentos",
       value: Number(totalInvestmentsPlan),
-      color: Colors.info,
+      color: Colors.investments,
     },
   ];
 
@@ -603,17 +605,24 @@ const CashFlowScreen: React.FC = () => {
         </CashFlowReport>
         <ScrollView>
           <ChartContainer>
-            <CarriedOutChart>
-              <span>Realizado</span>
-              <ChartPie data={dataRealized} />
-            </CarriedOutChart>
             <PlanedChart>
-              <PlannedContainer>
+              <HeaderContainer>
                 <span>Planejado</span>
-                {planIssue && <FiAlertTriangle />}
-              </PlannedContainer>
+                <Error title="Regra 50 / 30 / 20 não está sendo cumprida!">
+                  {planIssue && <FiAlertTriangle />}
+                </Error>
+              </HeaderContainer>
               <ChartPie data={dataPlanned} />
             </PlanedChart>
+            <CarriedOutChart>
+              <HeaderContainer>
+                <span>Realizado</span>
+                <Error title="Regra 50 / 30 / 20 não está sendo cumprida!">
+                  {realizedIssue && <FiAlertTriangle />}
+                </Error>
+              </HeaderContainer>
+              <ChartPie data={dataRealized} />
+            </CarriedOutChart>
           </ChartContainer>
         </ScrollView>
       </CashFlowBody>

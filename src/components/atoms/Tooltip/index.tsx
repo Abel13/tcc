@@ -1,7 +1,7 @@
-import React from 'react';
-import { TooltipProps } from './interfaces';
+import React from "react";
+import { TooltipProps } from "./interfaces";
 
-import { Body } from './styles';
+import { Body } from "./styles";
 
 const Tooltip: React.FC<TooltipProps> = ({ title, className, children }) => {
   return (

@@ -15,6 +15,7 @@ export interface CashFlowContextData {
   fixedOutgoings: categoryItem[];
 
   planIssue: boolean;
+  realizedIssue: boolean;
 
   getCashFlow(startDate: string, endDate: string): Promise<void>;
 }
@@ -36,6 +37,7 @@ export interface CashFlowState {
   fixedOutgoings: categoryItem[];
 
   planIssue: boolean;
+  realizedIssue: boolean;
 }
 
 export interface categoryItem {

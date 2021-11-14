@@ -1,6 +1,6 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-import Colors from '../../../styles/colors.json';
+import Colors from "../../../styles/colors.json";
 
 export const Body = styled.div`
   position: relative;
@@ -13,7 +13,7 @@ export const Body = styled.div`
     color: ${Colors.light};
     font-size: 16px;
     font-weight: 600;
-    font-family: 'Advent Pro', sans-serif;
+    font-family: "Advent Pro", sans-serif;
     opacity: 0;
     transition: opacity 0.4s;
     position: absolute;
@@ -23,7 +23,7 @@ export const Body = styled.div`
     visibility: hidden;
 
     &::before {
-      content: '';
+      content: "";
       border-style: solid;
       border-color: ${Colors.primary} transparent;
       border-width: 6px 6px 0 6px;

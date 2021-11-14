@@ -43,8 +43,6 @@ export const PlanProvider: React.FC = ({ children }) => {
         }) as Plan[];
       }
 
-      console.log(datedPlans);
-
       setData({
         loading: false,
         plans: datedPlans,
@@ -61,12 +59,23 @@ export const PlanProvider: React.FC = ({ children }) => {
       });
       const plans = data.plans ?? [];
 
-      const response = await api.post<Plan>("plan", plan);
-      const newPlan = { ...plan, secureId: response.data.secureId };
+      const response = await api.post("plan", plan);
+      const { plan: newPlan } = response.data;
+
+      const datedPlan = {
+        ...newPlan,
+        dueDate: dayjs(newPlan.dueDate).add(1, "d").toDate(),
+      };
+
+      const newPlans = [...plans, datedPlan];
+
+      const sortedPlans = newPlans.sort((a, b) =>
+        a.dueDate.toLocaleString().localeCompare(b.dueDate.toLocaleString())
+      );
 
       setData({
         loading: false,
-        plans: [...plans, newPlan],
+        plans: sortedPlans,
       });
     },
     [data]
@@ -180,9 +189,7 @@ export const PlanProvider: React.FC = ({ children }) => {
     <PlanContext.Provider
       value={{
         loading: data.loading,
-        plans: data.plans.sort((a, b) =>
-          a.dueDate.toDateString().localeCompare(b.dueDate.toDateString())
-        ),
+        plans: data.plans,
         getPlan,
         postPlan,
         deletePlan,
